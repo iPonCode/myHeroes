@@ -1,5 +1,5 @@
 //  ContentView.swift
-//  iListUI
+//  myHeroes
 //
 //  Created by Simón Aparicio on 24/03/2020.
 //  Copyright © 2020 iPon.es. All rights reserved.
