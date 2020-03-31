@@ -22,7 +22,7 @@ A simple Character List App from [API Marvel][apiMarvel]
 
 [//]: # (links)
 
-   [iList]: <https://github.com/ssuperw/iList>
+   [iList]: <https://github.com/ssuperw/iListUI>
    [myHeroes]: <https://github.com/ssuperw/myHeroes>
    [apiMarvel]: <https://developer.marvel.com/docs>
    
