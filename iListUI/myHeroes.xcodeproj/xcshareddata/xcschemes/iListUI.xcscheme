@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D07CC935242ABC6800EDB5A5"
-               BuildableName = "iListUI.app"
-               BlueprintName = "iListUI"
-               ReferencedContainer = "container:iListUI.xcodeproj">
+               BuildableName = "myHeroes.app"
+               BlueprintName = "myHeroes"
+               ReferencedContainer = "container:myHeroes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D07CC935242ABC6800EDB5A5"
-            BuildableName = "iListUI.app"
-            BlueprintName = "iListUI"
-            ReferencedContainer = "container:iListUI.xcodeproj">
+            BuildableName = "myHeroes.app"
+            BlueprintName = "myHeroes"
+            ReferencedContainer = "container:myHeroes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D07CC935242ABC6800EDB5A5"
-            BuildableName = "iListUI.app"
-            BlueprintName = "iListUI"
-            ReferencedContainer = "container:iListUI.xcodeproj">
+            BuildableName = "myHeroes.app"
+            BlueprintName = "myHeroes"
+            ReferencedContainer = "container:myHeroes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

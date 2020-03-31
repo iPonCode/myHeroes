@@ -32,7 +32,7 @@
 		D037D372242D412C0062A012 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D037D374242D9AC60062A012 /* SortingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingType.swift; sourceTree = "<group>"; };
 		D037D376242DB8010062A012 /* OptionsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsFactory.swift; sourceTree = "<group>"; };
-		D07CC936242ABC6800EDB5A5 /* iListUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iListUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D07CC936242ABC6800EDB5A5 /* myHeroes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myHeroes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D07CC939242ABC6800EDB5A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D07CC93B242ABC6800EDB5A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D07CC93D242ABC6800EDB5A5 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		D07CC92D242ABC6800EDB5A5 = {
 			isa = PBXGroup;
 			children = (
-				D07CC938242ABC6800EDB5A5 /* iListUI */,
+				D07CC938242ABC6800EDB5A5 /* myHeroes */,
 				D07CC937242ABC6800EDB5A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,19 +76,19 @@
 		D07CC937242ABC6800EDB5A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D07CC936242ABC6800EDB5A5 /* iListUI.app */,
+				D07CC936242ABC6800EDB5A5 /* myHeroes.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D07CC938242ABC6800EDB5A5 /* iListUI */ = {
+		D07CC938242ABC6800EDB5A5 /* myHeroes */ = {
 			isa = PBXGroup;
 			children = (
 				D07CC94E242ABD3000EDB5A5 /* Source */,
 				D07CC94D242ABCD800EDB5A5 /* Resource */,
 				D07CC941242ABC7000EDB5A5 /* Preview Content */,
 			);
-			path = iListUI;
+			path = myHeroes;
 			sourceTree = "<group>";
 		};
 		D07CC941242ABC7000EDB5A5 /* Preview Content */ = {
@@ -145,9 +145,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D07CC935242ABC6800EDB5A5 /* iListUI */ = {
+		D07CC935242ABC6800EDB5A5 /* myHeroes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D07CC94A242ABC7000EDB5A5 /* Build configuration list for PBXNativeTarget "iListUI" */;
+			buildConfigurationList = D07CC94A242ABC7000EDB5A5 /* Build configuration list for PBXNativeTarget "myHeroes" */;
 			buildPhases = (
 				D07CC932242ABC6800EDB5A5 /* Sources */,
 				D07CC933242ABC6800EDB5A5 /* Frameworks */,
@@ -157,9 +157,9 @@
 			);
 			dependencies = (
 			);
-			name = iListUI;
+			name = myHeroes;
 			productName = iListUI;
-			productReference = D07CC936242ABC6800EDB5A5 /* iListUI.app */;
+			productReference = D07CC936242ABC6800EDB5A5 /* myHeroes.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -177,7 +177,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D07CC931242ABC6800EDB5A5 /* Build configuration list for PBXProject "iListUI" */;
+			buildConfigurationList = D07CC931242ABC6800EDB5A5 /* Build configuration list for PBXProject "myHeroes" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -190,7 +190,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D07CC935242ABC6800EDB5A5 /* iListUI */,
+				D07CC935242ABC6800EDB5A5 /* myHeroes */,
 			);
 		};
 /* End PBXProject section */
@@ -362,16 +362,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1000;
-				DEVELOPMENT_ASSET_PATHS = "\"iListUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"myHeroes/myHeroes/Preview Content\"";
 				DEVELOPMENT_TEAM = L5TVGKA54T;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iListUI/Resource/Info.plist;
+				INFOPLIST_FILE = myHeroes/Resource/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = es.iPon.iListUI;
+				PRODUCT_BUNDLE_IDENTIFIER = es.iPon.myHeroes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -384,16 +384,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1000;
-				DEVELOPMENT_ASSET_PATHS = "\"iListUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"myHeroes/myHeroes/Preview Content\"";
 				DEVELOPMENT_TEAM = L5TVGKA54T;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iListUI/Resource/Info.plist;
+				INFOPLIST_FILE = myHeroes/Resource/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = es.iPon.iListUI;
+				PRODUCT_BUNDLE_IDENTIFIER = es.iPon.myHeroes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,7 +403,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D07CC931242ABC6800EDB5A5 /* Build configuration list for PBXProject "iListUI" */ = {
+		D07CC931242ABC6800EDB5A5 /* Build configuration list for PBXProject "myHeroes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D07CC948242ABC7000EDB5A5 /* Debug */,
@@ -412,7 +412,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D07CC94A242ABC7000EDB5A5 /* Build configuration list for PBXNativeTarget "iListUI" */ = {
+		D07CC94A242ABC7000EDB5A5 /* Build configuration list for PBXNativeTarget "myHeroes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D07CC94B242ABC7000EDB5A5 /* Debug */,
