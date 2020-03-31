@@ -1,8 +1,12 @@
 # myHeroes
 A simple Character List App from [API Marvel][apiMarvel]
-[![myHeroesLogo](readme-img/myHeroes-repository-readme-circle-logo-small)](https://github.com/ssuperw/combineSignUp)
-##### Screenshots
+
+[![myHeroesLogo](readme-img/myHeroes-repository-readme-circle-logo-small.png)](https://github.com/ssuperw/myHeroes)
+
+
+### Screenshots
 > (image pending…)
+
 
 
 ##### Base project from [here][iList] 
@@ -14,6 +18,7 @@ A simple Character List App from [API Marvel][apiMarvel]
 - [x] Options for filter and sorting presented in iOS13 modal view style
 - [x] Persistence options using UserDefaults and @ObservableObject
 - [x] Clean design respecting dark mode
+
 
 [//]: # (links)
 
