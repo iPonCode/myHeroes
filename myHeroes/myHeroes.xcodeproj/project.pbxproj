@@ -24,6 +24,7 @@
 		D07CC946242ABC7000EDB5A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D07CC944242ABC7000EDB5A5 /* LaunchScreen.storyboard */; };
 		D07CC952242ACD5800EDB5A5 /* AnItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CC951242ACD5800EDB5A5 /* AnItem.swift */; };
 		D07CC954242ACE1800EDB5A5 /* AnItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CC953242ACE1800EDB5A5 /* AnItemsFactory.swift */; };
+		D081E93A2434A31A002B6D13 /* CharactersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081E9392434A31A002B6D13 /* CharactersList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		D07CC947242ABC7000EDB5A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D07CC951242ACD5800EDB5A5 /* AnItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnItem.swift; sourceTree = "<group>"; };
 		D07CC953242ACE1800EDB5A5 /* AnItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnItemsFactory.swift; sourceTree = "<group>"; };
+		D081E9392434A31A002B6D13 /* CharactersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				D07CC953242ACE1800EDB5A5 /* AnItemsFactory.swift */,
 				D037D374242D9AC60062A012 /* SortingType.swift */,
 				D037D376242DB8010062A012 /* OptionsFactory.swift */,
+				D081E9392434A31A002B6D13 /* CharactersList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				D0783FC22433EDD50043B426 /* HeroesListViewModel.swift in Sources */,
 				D037D36D242B0E1B0062A012 /* ItemDetailView.swift in Sources */,
 				D07CC93C242ABC6800EDB5A5 /* SceneDelegate.swift in Sources */,
+				D081E93A2434A31A002B6D13 /* CharactersList.swift in Sources */,
 				D07CC954242ACE1800EDB5A5 /* AnItemsFactory.swift in Sources */,
 				D07CC93E242ABC6800EDB5A5 /* ListView.swift in Sources */,
 				D037D375242D9AC60062A012 /* SortingType.swift in Sources */,
