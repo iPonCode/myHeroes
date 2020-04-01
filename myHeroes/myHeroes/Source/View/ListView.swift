@@ -56,11 +56,55 @@ struct ListView: View {
             
             List{
                 ForEach(viewModel.chars, id: \.id) { charty in
-                    Text(String(charty.name ?? "default nil value"))
-                        .onTapGesture {
-                            self.dumpy(charty)
+                    ZStack {
+                        VStack {
+                            Text(String(charty.name ?? "default nil value"))
+                                .contextMenu {
+                                    Button(action: { // watched
+                                        //self.toggle(item, type: .watched)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.watched ? "Marcar como no visto" : "Visto")
+                                            Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+                                        }
+                                    })
+                                    Button(action: { // favourite
+                                        self.toggle(charty, type: .favourite)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.favourite ? "Quitar favorito" : "Favorito")
+                                            Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+                                        }
+                                    })
+
+                                    Button(action: { // feature
+                                        self.toggle(charty, type: .featured)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.featured ? "No destacar" : "Destacar")
+                                            Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                        }
+                                    })
+
+                                    Button(action: { // remove
+                                        self.removeItem(item: charty)
+                                    }, label: {
+                                        HStack{
+                                            Text("Eliminar")
+                                            Image(systemName: AppConfig.menuRemove)
+                                        }
+                                    })
+                            }
+                            .onTapGesture {
+                                self.dumpy(charty)
+                            }
+                        }
                     }
                 }
+                .onDelete(perform: { (indexSet) in
+                    // with onDelete, can delete a Set of items. Remember apply the same filters and sorting as showing before remove an item
+                    self.viewModel.chars.remove(atOffsets: indexSet)
+                })
             
             }.navigationBarTitle(Text(listTitle))
         
@@ -162,43 +206,43 @@ struct ListView: View {
         case featured
     }
     
-    func toggle(_ item: AnItem, type: ToggleType) {
+    func toggle(_ item: CharacterListItemDTO, type: ToggleType) {
         
-        if let index = self.someItems.firstIndex(where: { $0.id == item.id }) {
+        if let index = self.viewModel.chars.firstIndex(where: { $0.id == item.id }) {
             switch type {
-                case .watched: someItems[index].watched.toggle()
-                case .favourite: someItems[index].favourite.toggle()
-                case .featured: someItems[index].featured.toggle()
+                case .watched: viewModel.chars[index].watched.toggle()
+                case .favourite: viewModel.chars[index].favourite.toggle()
+                case .featured: viewModel.chars[index].featured.toggle()
             }
         }
     }
 
-    func removeItem(item: AnItem) { // remove an item
+    func removeItem(item: CharacterListItemDTO) { // remove an item
         
-        someItems.removeAll(where: { anItem in
-            anItem.id == item.id
+        self.viewModel.chars.removeAll(where: { charty in
+            charty.id == item.id
         })
-//        if let index = self.someItems.firstIndex(where: {$0.id == item.id}){
-//            self.someItems.remove(at: index)
+//        if let index = self.viewModel.chars.firstIndex(where: {$0.id == item.id}){
+//            self.viewModel.chars.remove(at: index)
 //        }
     }
 
-    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
-        
-        // When using an index need to filter and sort array previously
-        // >> exactly in the same way that are displayed <<
-        var itemsWithCurrentFilters = self.someItems
-            .filter(shouldShowItem)
-            .sorted(by: self.options.selectedSorting.sortingPredicate(
-                descOrder: self.options.selectedSortingOption.boolMe()))
-        
-//        itemsSet.forEach { index in
-//            itemsWithCurrentFilters.remove(at: index)
-//        }
-        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
-
-        self.someItems = itemsWithCurrentFilters
-    }
+//    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
+//        
+//        // When using an index need to filter and sort array previously
+//        // >> exactly in the same way that are displayed <<
+//        var itemsWithCurrentFilters = self.someItems
+//            .filter(shouldShowItem)
+//            .sorted(by: self.options.selectedSorting.sortingPredicate(
+//                descOrder: self.options.selectedSortingOption.boolMe()))
+//        
+////        itemsSet.forEach { index in
+////            itemsWithCurrentFilters.remove(at: index)
+////        }
+//        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
+//
+//        self.someItems = itemsWithCurrentFilters
+//    }
 
     private func shouldShowItem(_ item: AnItem) -> Bool {
         let checkWatched = (self.options.showWatchedOnly && item.watched) || !self.options.showWatchedOnly
