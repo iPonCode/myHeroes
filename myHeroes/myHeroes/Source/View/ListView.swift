@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ListView: View {
     
@@ -14,6 +15,8 @@ struct ListView: View {
     @State var someItems = AnItemsFactory.someItems
     
     @EnvironmentObject var options: OptionsFactory
+    
+    @ObservedObject var viewModel = HeroesListViewModel()
     
     let listTitle = "Items super chulos!"
     
@@ -44,94 +47,110 @@ struct ListView: View {
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
-    
+    func dumpy(_ charty:CharacterListItemDTO){
+        dump(charty)
+    }
     var body: some View {
         
         NavigationView{
             
-            List{ // need a ForEach instead directly a List to implement onDelete
-                
-                ForEach(someItems
-                    .filter(shouldShowItem)
-                    .sorted(by: self.options.selectedSorting.sortingPredicate(
-                        descOrder: self.options.selectedSortingOption.boolMe()))){ item in
-                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ item in
-                    // Important to filter and sorted in the same way
-                    // before remove with an index (.onDelete indexSet)
-
-                    ZStack {
-                        VStack {
-                            if item.featured {
-                                CellViewTypeTwo(anItem: item)
-                            } else {
-                                CellViewTypeOne(anItem: item)
-                            }
-                        }
-                        .contextMenu{
-                            
-                            Button(action: { // watched
-                                self.toggle(item, type: .watched)
-                            }, label: {
-                                HStack{
-                                    Text(item.watched ? "Marcar como no visto" : "Visto")
-                                    Image(systemName: item.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-                                }
-                            })
-                            
-                            Button(action: { // favourite
-                                self.toggle(item, type: .favourite)
-                            }, label: {
-                                HStack{
-                                    Text(item.favourite ? "Quitar favorito" : "Favorito")
-                                    Image(systemName: item.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                }
-                            })
-                            
-                            Button(action: { // feature
-                                self.toggle(item, type: .featured)
-                            }, label: {
-                                HStack{
-                                    Text(item.favourite ? "No destacar" : "Destacar")
-                                    Image(systemName: item.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-                                }
-                            })
-                            
-                            Button(action: { // remove
-                                self.removeItem(item: item)
-                            }, label: {
-                                HStack{
-                                    Text("Eliminar")
-                                    Image(systemName: AppConfig.menuRemove)
-                                }
-                            })
-                        }
-                        //.onTapGesture { // now using a navigation link
-                        //}
-
-                        // this is the only way (right now) to remove or do not show the
-                        // disclouser indicator in the row, first renders the content and
-                        // after this render over an empty view, needed a ZStack to do this
-                        NavigationLink(destination: ItemDetailView(item: item)) {
-                            EmptyView()
-                        }//navigation link
+            List{
+                ForEach(viewModel.chars, id: \.id) { charty in
+                    Text(String(charty.name ?? "default nil value"))
+                        .onTapGesture {
+                            self.dumpy(charty)
                     }
-                }//foreach
-                .onDelete(perform: { (indexSet) in // with onDelete, can delete a Set of items
-                    self.removeItem(itemsSet: indexSet)
-                })
-            }//list
-            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
-            .navigationBarTitle(listTitle)
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.showOptions = true
-                }, label: {
-                    Image(systemName: AppConfig.barShowOptions).font(.title)
-            })
-            )// this modificator is for present Options in modal view and the binded var is necessary to close it
-            .sheet(isPresented: $showOptions){
-                OptionsView().environmentObject(self.options) // dependency injection
-            }
+                }
+            
+            }.navigationBarTitle(Text(listTitle))
+        
+//            List (networkManager.chars, id: \.id){
+//                Text(String($0.name ?? "defaultValue for nil"))
+//            }.navigationBarTitle(Text(listTitle))
+            
+//            List{ // need a ForEach instead directly a List to implement onDelete
+//
+//                ForEach(someItems
+//                    .filter(shouldShowItem)
+//                    .sorted(by: self.options.selectedSorting.sortingPredicate(
+//                        descOrder: self.options.selectedSortingOption.boolMe()))){ item in
+//                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ item in
+//                    // Important to filter and sorted in the same way
+//                    // before remove with an index (.onDelete indexSet)
+//
+//                    ZStack {
+//                        VStack {
+//                            if item.featured {
+//                                CellViewTypeTwo(anItem: item)
+//                            } else {
+//                                CellViewTypeOne(anItem: item)
+//                            }
+//                        }
+//                        .contextMenu{
+//
+//                            Button(action: { // watched
+//                                self.toggle(item, type: .watched)
+//                            }, label: {
+//                                HStack{
+//                                    Text(item.watched ? "Marcar como no visto" : "Visto")
+//                                    Image(systemName: item.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+//                                }
+//                            })
+//
+//                            Button(action: { // favourite
+//                                self.toggle(item, type: .favourite)
+//                            }, label: {
+//                                HStack{
+//                                    Text(item.favourite ? "Quitar favorito" : "Favorito")
+//                                    Image(systemName: item.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+//                                }
+//                            })
+//
+//                            Button(action: { // feature
+//                                self.toggle(item, type: .featured)
+//                            }, label: {
+//                                HStack{
+//                                    Text(item.favourite ? "No destacar" : "Destacar")
+//                                    Image(systemName: item.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+//                                }
+//                            })
+//
+//                            Button(action: { // remove
+//                                self.removeItem(item: item)
+//                            }, label: {
+//                                HStack{
+//                                    Text("Eliminar")
+//                                    Image(systemName: AppConfig.menuRemove)
+//                                }
+//                            })
+//                        }
+//                        //.onTapGesture { // now using a navigation link
+//                        //}
+//
+//                        // this is the only way (right now) to remove or do not show the
+//                        // disclouser indicator in the row, first renders the content and
+//                        // after this render over an empty view, needed a ZStack to do this
+//                        NavigationLink(destination: ItemDetailView(item: item)) {
+//                            EmptyView()
+//                        }//navigation link
+//                    }
+//                }//foreach
+//                .onDelete(perform: { (indexSet) in // with onDelete, can delete a Set of items
+//                    self.removeItem(itemsSet: indexSet)
+//                })
+//            }//list
+//            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
+//            .navigationBarTitle(listTitle)
+//            .navigationBarItems(trailing:
+//                Button(action: {
+//                    self.showOptions = true
+//                }, label: {
+//                    Image(systemName: AppConfig.barShowOptions).font(.title)
+//            })
+//            )// this modificator is for present Options in modal view and the binded var is necessary to close it
+//            .sheet(isPresented: $showOptions){
+//                OptionsView().environmentObject(self.options) // dependency injection
+//            }
             
         }//navigation view
         
