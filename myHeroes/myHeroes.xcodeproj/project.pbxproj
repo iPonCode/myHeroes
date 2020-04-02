@@ -27,6 +27,7 @@
 		D081E9402434EF92002B6D13 /* CharactersDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081E93F2434EF92002B6D13 /* CharactersDTOs.swift */; };
 		D0B87AFD2435318000433CF2 /* AnItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B87AFC2435318000433CF2 /* AnItem.swift */; };
 		D0B87AFF2435319C00433CF2 /* AnItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B87AFE2435319C00433CF2 /* AnItemsFactory.swift */; };
+		D0C1D3712435FBE9008E8CED /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1D3702435FBE9008E8CED /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		D081E93F2434EF92002B6D13 /* CharactersDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersDTOs.swift; sourceTree = "<group>"; };
 		D0B87AFC2435318000433CF2 /* AnItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnItem.swift; sourceTree = "<group>"; };
 		D0B87AFE2435319C00433CF2 /* AnItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnItemsFactory.swift; sourceTree = "<group>"; };
+		D0C1D3702435FBE9008E8CED /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				D0783FC12433EDD50043B426 /* HeroesListViewModel.swift */,
+				D0C1D3702435FBE9008E8CED /* ImageLoader.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				D037D373242D412C0062A012 /* Constants.swift in Sources */,
 				D0783FC22433EDD50043B426 /* HeroesListViewModel.swift in Sources */,
 				D037D36D242B0E1B0062A012 /* ItemDetailView.swift in Sources */,
+				D0C1D3712435FBE9008E8CED /* ImageLoader.swift in Sources */,
 				D07CC93C242ABC6800EDB5A5 /* SceneDelegate.swift in Sources */,
 				D07CC93E242ABC6800EDB5A5 /* ListView.swift in Sources */,
 				D037D375242D9AC60062A012 /* SortingType.swift in Sources */,

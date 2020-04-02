@@ -33,8 +33,8 @@ class HeroesListViewModel: ObservableObject {
                 if let characters = networkResponse.data?.results{
                      self.chars = characters
                 }
-                dump(networkResponse)
-                print("completed fetching json")
+//                dump(networkResponse)
+//                print("completed fetching json")
             }
         }.resume()
         
@@ -53,7 +53,6 @@ https://gateway.marvel.com:443/v1/public/characters?ts=1585767511&apikey=1de4fe3
         let ts = String(format:"%.f",timeStamp)
         let hashChecksum = String(format: "%.f%@%@", timeStamp, privateKey, publicKey).md5()
         let url = baseUrl + "?ts=" + ts + "&apikey=" + publicKey + "&hash=" + hashChecksum
-        print(url)
         return url
     }
 }

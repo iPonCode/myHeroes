@@ -26,8 +26,8 @@ public struct ResponseDataDTO: Codable {
 
 
 // MARK: Character List
-public struct CharacterListItemDTO: Codable {
-    let id: Int
+public struct CharacterListItemDTO: Codable, Identifiable {
+    public let id: Int
     let name: String?
     let resultDescription: String?
     let thumbnail: ThumbnailDTO?
