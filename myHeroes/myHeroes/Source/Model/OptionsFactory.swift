@@ -21,7 +21,7 @@ final class OptionsFactory: ObservableObject{
             "app.view.options.showWatchedOnly": false,
             "app.view.options.showFavouriteOnly": false,
             "app.view.options.showFeaturedOnly": false,
-            "app.view.options.maxPopularity": 5
+            "app.view.options.minComicsAvailable": 0
         ])
     }
     
@@ -71,12 +71,12 @@ final class OptionsFactory: ObservableObject{
         }
     }
 
-    var maxPopularity: Int{
+    var minComicsAvailable: Int{
         get{
-            defaults.integer(forKey: "app.view.options.maxPopularity")
+            defaults.integer(forKey: "app.view.options.minComicsAvailable")
         }
         set{
-            defaults.set(newValue, forKey: "app.view.options.maxPopularity")
+            defaults.set(newValue, forKey: "app.view.options.minComicsAvailable")
         }
     }
     

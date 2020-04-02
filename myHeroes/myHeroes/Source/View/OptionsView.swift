@@ -14,61 +14,55 @@ struct OptionsView: View {
     @EnvironmentObject var options: OptionsFactory
 
     // set default values
-    @State private var selectedSorting = SortingType.alphabetical
+    @State private var selectedSorting = SortingType.byName
     @State private var selectedSortingOption = SortingOptionType.descending
     @State private var showWatchedOnly = false
     @State private var showFavouriteOnly = false
     @State private var showFeaturedOnly = false
-    @State private var maxPopularity = 5 {
+    @State private var minComicsAvailable = 0 {
         didSet { // limit the max and min value that the user can selected for popularity filter
-            if maxPopularity > 5 { maxPopularity = 5 }
-            if maxPopularity < 1 { maxPopularity = 1 }
+            if minComicsAvailable > 50 { minComicsAvailable = 50 }
+            if minComicsAvailable < 0 { minComicsAvailable = 0 }
         }
     }
 
-    let optionsTitle = "Opciones"
+    let optionsTitle = "Sorting and filters"
 
     var body: some View {
         
         NavigationView {
             Form {
-                Section(header: Text("Selecciona los criterios de filtrado")
+                Section(header: Text("Select filters criteria")
                                     .font(.system(.body, design: .rounded))
-                                    .fontWeight(.regular)) {
+                                    .fontWeight(.semibold)) {
                     Toggle(isOn: $showWatchedOnly){
-                        Text("Mostrar solo cursos vistos")
+                        Text("Show only checked as Wached")
                     }
                     Toggle(isOn: $showFavouriteOnly){
-                        Text("Mostrar solo cursos favoritos")
+                        Text("Show only checked as Favourite")
                     }
                     Toggle(isOn: $showFeaturedOnly){
-                        Text("Mostrar solo cursos destacados")
+                        Text("Show only checked as Featured")
                     }
 
                     Stepper(onIncrement: {
-                        self.maxPopularity += 1
+                        self.minComicsAvailable += 5
                     }, onDecrement: {
-                        self.maxPopularity -= 1
+                        self.minComicsAvailable -= 5
                     }){
-                        HStack {
-                            Text("Mostrar")
-                            Text("\(String(repeating: AppConfig.popularityChar, count: maxPopularity))")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
-                            Text("o menos")
-                        }
+                        Text(String(format: "Show only with at least %d comics available", minComicsAvailable))
                     }
                 }
 
-                Section(header: Text("Selectiona los criterios de ordenación")
+                Section(header: Text("Select sorting criteria")
                                     .font(.system(.body, design: .rounded))
-                                    .fontWeight(.regular)) {
-                    Picker(selection: $selectedSorting, label: Text("Ordenar")){
+                                    .fontWeight(.semibold)) {
+                    Picker(selection: $selectedSorting, label: Text("Sorting by")){
                         ForEach(SortingType.allCases, id: \.self){ sortingType in
                             Text(sortingType.description)
                         }
                     }
-                    Picker(selection: $selectedSortingOption, label: Text("Mostrar")){
+                    Picker(selection: $selectedSortingOption, label: Text("Sorting by")){
                         ForEach(SortingOptionType.allCases, id: \.self){ sortingOptionType in
                             Text(sortingOptionType.description)
                         }
@@ -94,7 +88,7 @@ struct OptionsView: View {
                 self.options.showWatchedOnly = self.showWatchedOnly
                 self.options.showFavouriteOnly = self.showFavouriteOnly
                 self.options.showFeaturedOnly = self.showFeaturedOnly
-                self.options.maxPopularity = self.maxPopularity
+                self.options.minComicsAvailable = self.minComicsAvailable
 
                 self.presentationMode.wrappedValue.dismiss() // close view
                 }, label: {
@@ -110,7 +104,7 @@ struct OptionsView: View {
             self.showWatchedOnly = self.options.showWatchedOnly
             self.showFavouriteOnly = self.options.showFavouriteOnly
             self.showFeaturedOnly = self.options.showFeaturedOnly
-            self.maxPopularity = self.options.maxPopularity
+            self.minComicsAvailable = self.options.minComicsAvailable
         }
 
     }

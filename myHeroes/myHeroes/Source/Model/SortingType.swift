@@ -9,10 +9,10 @@ import Foundation
 
 enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a ForEach
     
-    case alphabetical = 0
-    case byAuthor = 1
-    case byType = 2
-    case comicsAvailable = 3
+    case byName = 0
+    case byId = 1
+    case byAvailableComics = 2
+    case byComics = 3
     case watched = 4
     case favourite = 5
     case featured = 6
@@ -21,13 +21,13 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         
         switch type {
         case 0:
-            self = .alphabetical
+            self = .byName
         case 1:
-            self = .byAuthor
+            self = .byId
         case 2:
-            self = .byType
+            self = .byAvailableComics
         case 3:
-            self = .comicsAvailable
+            self = .byComics
         case 4:
             self = .watched
         case 5:
@@ -35,61 +35,41 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         case 6:
             self = .featured
         default:
-            self = .alphabetical
+            self = .byName
         }
     }
     
     var description : String { // the text for each case
         
         switch self {
-        case .alphabetical:
-            return "Alfabéticamente (título)"
-        case .byAuthor:
-            return "Por autor"
-        case .byType:
-            return "Por tipo"
-        case .comicsAvailable:
-            return "Popularidad"
+        case .byName:
+            return "Character name"
+        case .byId:
+            return "Character ID"
+        case .byAvailableComics:
+            return "Comics (available)"
+        case .byComics:
+            return "Comics"
         case .watched:
-            return "Vistos"
+            return "Checked as Watched"
         case .favourite:
-            return "Favoritos"
+            return "Checked as Favourite"
         case .featured:
-            return "Destacados"
+            return "Checked as Featured"
         }
     }
-    
-//    func sortingPredicate() -> ((AnItem, AnItem) -> Bool){
-//
-//        switch self {
-//            case .alphabetical:
-//                return {$0.title < $1.title}
-//            case .byAuthor:
-//                return {$0.author < $1.author}
-//            case .byType:
-//                return {$0.type < $1.type}
-//            case .comicsAvailable:
-//                return {$0.popularity < $1.popularity}
-//            case .watched:
-//                return {$0.watched && !$1.watched}
-//            case .favourite:
-//                return {$0.favourite && !$1.favourite}
-//            case .featured:
-//                return {$0.featured && !$1.featured}
-//        }
-//    }
     
     func sortingPredicate(descOrder: Bool = true) -> ((CharacterListItemDTO, CharacterListItemDTO) -> Bool){
         
         switch self {
-            case .alphabetical:
-                return {_,_ in true}//descOrder ? {$0.title < $1.title} : {$0.title > $1.title}
-            case .byAuthor:
-                return {_,_ in true}//descOrder ? {$0.author < $1.author} : {$0.author > $1.author}
-            case .byType:
-                return {_,_ in true}//descOrder ? {$0.type < $1.type} : {$0.type > $1.type}
-            case .comicsAvailable:
-                return descOrder ? {$0.comics.available < $1.comics.available} : {$0.comics.available > $1.comics.available}
+            case .byName:
+                return { descOrder ? ($0.name ?? "" < $1.name ?? "") : ($0.name ?? "" > $1.name ?? "") }
+            case .byId:
+                return { descOrder ? ($0.id < $1.id) : ($0.id > $1.id) }
+            case .byAvailableComics:
+                return { descOrder ? ($0.comics.available < $1.comics.available) : ($0.comics.available > $1.comics.available) }
+            case .byComics:
+                return { descOrder ? ($0.comics.items.count < $1.comics.items.count) : ($0.comics.items.count > $1.comics.items.count) }
             case .watched:
                 return descOrder ? {$0.watched && !$1.watched} : {!$0.watched && $1.watched}
             case .favourite:
@@ -121,9 +101,9 @@ enum SortingOptionType: Int, CaseIterable {
         
         switch self {
         case .ascending:
-            return "Orden ascendente"
+            return "in ascending order"
         case .descending:
-            return "Orden descendente"
+            return "in descending order"
         }
     }
     
