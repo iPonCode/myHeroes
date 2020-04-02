@@ -52,10 +52,11 @@ struct ListView: View {
         NavigationView{
             
             List{
-                ForEach(viewModel.chars/*, id: \.id*/) { charty in
-//                    .filter(shouldShowItem)
-//                    .sorted(by: self.options.selectedSorting.sortingPredicate(
-//                        descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
+//                ForEach(viewModel.chars/*, id: \.id*/) { charty in
+                ForEach(viewModel.chars
+                    .filter(shouldShowItem)
+                    .sorted(by: self.options.selectedSorting.sortingPredicate(
+                        descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
 //                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ charty in
 //                    // Important to filter and sorted in the same way
 //                    // before remove with an index (.onDelete indexSet)
@@ -166,9 +167,9 @@ struct ListView: View {
         // When using an index need to filter and sort array previously
         // >> exactly in the same way that are displayed <<
         var itemsWithCurrentFilters = viewModel.chars // TODO: review filters and sorting
-//            .filter(shouldShowItem)
-//            .sorted(by: self.options.selectedSorting.sortingPredicate(
-//                descOrder: self.options.selectedSortingOption.boolMe()))
+            .filter(shouldShowItem)
+            .sorted(by: self.options.selectedSorting.sortingPredicate(
+                descOrder: self.options.selectedSortingOption.boolMe()))
         
 //        itemsSet.forEach { index in
 //            itemsWithCurrentFilters.remove(at: index)
@@ -182,8 +183,8 @@ struct ListView: View {
         let checkWatched = (self.options.showWatchedOnly && item.watched) || !self.options.showWatchedOnly
         let checkFavourite = (self.options.showFavouriteOnly && item.favourite) || !self.options.showFavouriteOnly
         let checkFeatured = (self.options.showFeaturedOnly && item.featured) || !self.options.showFeaturedOnly
-        let checkPopularity = (item.comics.available <= self.options.maxPopularity) // TODO: refactor maxPopularity to maxComicsAvalable
-        return checkWatched && checkFavourite && checkFeatured && checkPopularity
+        let checkComicsAvailable = (item.comics.available >= self.options.minComicsAvailable)
+        return checkWatched && checkFavourite && checkFeatured && checkComicsAvailable
     }
    
 }
