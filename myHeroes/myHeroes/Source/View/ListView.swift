@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Foundation
-import AlamofireImage
 
 struct ListView: View {
     
@@ -19,7 +18,7 @@ struct ListView: View {
     
     @ObservedObject var viewModel = HeroesListViewModel()
     
-    let listTitle = "Items super chulos!"
+    let listTitle = "Personajes Marvel"
     
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
@@ -59,10 +58,11 @@ struct ListView: View {
                 ForEach(viewModel.chars, id: \.id) { charty in
                     ZStack {
                         VStack {
-                            Text(String(charty.name ?? "default nil value"))
+                            //Text(String(charty.name ?? "default nil value"))
+                            CellViewFeatured(charty: charty)
                                 .contextMenu {
                                     Button(action: { // watched
-                                        //self.toggle(item, type: .watched)
+                                        self.toggle(charty, type: .watched)
                                     }, label: {
                                         HStack{
                                             Text(charty.watched ? "Marcar como no visto" : "Visto")
@@ -318,6 +318,55 @@ struct CellViewTypeOne: View {
             }//vstack
         }//hstack
         
+    }
+}
+
+struct CellViewFeatured: View {
+    
+    var charty: CharacterListItemDTO
+    
+    var body: some View {
+        ZStack {
+            Image("imagen01")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .cornerRadius(15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(.gray)
+                        .opacity(0.55)
+            )
+            
+            VStack(alignment: .center, spacing: 1){
+                Text(String(charty.name ?? "default name"))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.black)
+                    .foregroundColor(.white)
+
+                Text(String(charty.resultDescription ?? "default description"))
+                    .font(.system(.headline, design: .rounded))
+                    .fontWeight(.regular)
+                    .foregroundColor(.white)
+                    .lineLimit(2)
+                
+                Spacer()
+                HStack(alignment: .center, spacing: 5) {
+                    HStack {
+                        if charty.favourite  { Image(systemName: AppConfig.cellFav) }
+                        if charty.watched { Image(systemName: AppConfig.cellWatched) }
+                    }
+                    Spacer()
+                    //Text(String(repeating: "", count: charty.comics.items.count))
+                    Text(String(format: "%@ comics | %@ eventos | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
+                }
+                .font(.system(.headline, design: .rounded))
+                .foregroundColor(.white)
+//                Text(String(charty.id))
+//                Text(String(charty.thumbnail?.path ?? "default thumbnail"))
+//                Text(String(charty.thumbnail?.thumbnailExtension ?? "default extension"))
+            }//vstack
+        .padding()
+        }//zstack
     }
 }
 

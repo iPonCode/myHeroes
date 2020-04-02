@@ -33,9 +33,9 @@ public struct CharacterListItemDTO: Codable {
     let thumbnail: ThumbnailDTO?
     let events, series: AvailableItemDTO?
     let comics: ComicsDTO
-    var watched: Bool = false
-    var favourite: Bool = false
-    var featured: Bool = false
+    var watched: Bool = Bool.random()
+    var favourite: Bool = Bool.random()
+    var featured: Bool = Bool.random()
 
     enum CodingKeys: String, CodingKey {
         case id, name, thumbnail, series, events, comics
