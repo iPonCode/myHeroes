@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import Combine
 
 struct ListView: View {
     
@@ -321,21 +322,59 @@ struct CellViewTypeOne: View {
     }
 }
 
+class ImageLoader: ObservableObject {
+
+//    var didChange = PassthroughSubject<Data, Never>()
+//
+//    @Published var data = Data() {
+//        didSet {
+//            didChange.send(data)
+//        }
+//    }
+
+    @Published var data = Data()
+    
+    init(url: String) {
+        
+        guard let url = URL(string: url) else { return }
+        URLSession.shared.dataTask(with: url) { (data, _, _) in
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self.data = data
+            }
+        }.resume()
+    }
+}
+
+struct ImageViewWidget: View {
+    
+    @ObservedObject var imageLoader: ImageLoader
+    
+    init(url: String) {
+        imageLoader = ImageLoader(url: url)
+        print(url)
+    }
+    
+    var body: some View {
+        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .cornerRadius(15)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(.gray)
+                    .opacity(0.55)
+        )
+    }
+}
+
 struct CellViewFeatured: View {
     
     var charty: CharacterListItemDTO
     
     var body: some View {
         ZStack {
-            Image("imagen01")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .cornerRadius(15)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundColor(.gray)
-                        .opacity(0.55)
-            )
+            ImageViewWidget(url: String(format: "%@.%@", String(charty.thumbnail!.path), String(charty.thumbnail!.thumbnailExtension)))
             
             VStack(alignment: .center, spacing: 1){
                 Text(String(charty.name ?? "default name"))
