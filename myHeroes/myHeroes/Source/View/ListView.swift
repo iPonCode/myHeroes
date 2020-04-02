@@ -6,19 +6,16 @@
 //
 
 import SwiftUI
-import Foundation
 
 struct ListView: View {
     
     @State var showOptions: Bool = false
     
-    @State var someItems = AnItemsFactory.someItems
-    
     @EnvironmentObject var options: OptionsFactory
     
     @ObservedObject var viewModel = HeroesListViewModel()
     
-    let listTitle = "Items super chulos!"
+    let listTitle = "Personajes Marvel"
     
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
@@ -55,150 +52,87 @@ struct ListView: View {
         NavigationView{
             
             List{
-                ForEach(viewModel.chars, id: \.id) { charty in
-                    ZStack {
-                        VStack {
-                            Text(String(charty.name ?? "default nil value"))
-                                .contextMenu {
-                                    Button(action: { // watched
-                                        //self.toggle(item, type: .watched)
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.watched ? "Marcar como no visto" : "Visto")
-                                            Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-                                        }
-                                    })
-                                    Button(action: { // favourite
-                                        self.toggle(charty, type: .favourite)
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.favourite ? "Quitar favorito" : "Favorito")
-                                            Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                        }
-                                    })
-
-                                    Button(action: { // feature
-                                        self.toggle(charty, type: .featured)
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.featured ? "No destacar" : "Destacar")
-                                            Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-                                        }
-                                    })
-
-                                    Button(action: { // remove
-                                        self.removeItem(item: charty)
-                                    }, label: {
-                                        HStack{
-                                            Text("Eliminar")
-                                            Image(systemName: AppConfig.menuRemove)
-                                        }
-                                    })
-                            }
-                            .onTapGesture {
-                                self.dumpy(charty)
-                            }
-                        }
-                    }
-                }
-                .onDelete(perform: { (indexSet) in
-                    // with onDelete, can delete a Set of items. Remember apply the same filters and sorting as showing before remove an item
-                    self.viewModel.chars.remove(atOffsets: indexSet)
-                })
-            
-            }.navigationBarTitle(Text(listTitle))
-        
-//            List (networkManager.chars, id: \.id){
-//                Text(String($0.name ?? "defaultValue for nil"))
-//            }.navigationBarTitle(Text(listTitle))
-            
-//            List{ // need a ForEach instead directly a List to implement onDelete
-//
-//                ForEach(someItems
+                ForEach(viewModel.chars/*, id: \.id*/) { charty in
 //                    .filter(shouldShowItem)
 //                    .sorted(by: self.options.selectedSorting.sortingPredicate(
-//                        descOrder: self.options.selectedSortingOption.boolMe()))){ item in
-//                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ item in
+//                        descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
+//                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ charty in
 //                    // Important to filter and sorted in the same way
 //                    // before remove with an index (.onDelete indexSet)
-//
-//                    ZStack {
-//                        VStack {
-//                            if item.featured {
-//                                CellViewTypeTwo(anItem: item)
-//                            } else {
-//                                CellViewTypeOne(anItem: item)
-//                            }
-//                        }
-//                        .contextMenu{
-//
-//                            Button(action: { // watched
-//                                self.toggle(item, type: .watched)
-//                            }, label: {
-//                                HStack{
-//                                    Text(item.watched ? "Marcar como no visto" : "Visto")
-//                                    Image(systemName: item.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-//                                }
-//                            })
-//
-//                            Button(action: { // favourite
-//                                self.toggle(item, type: .favourite)
-//                            }, label: {
-//                                HStack{
-//                                    Text(item.favourite ? "Quitar favorito" : "Favorito")
-//                                    Image(systemName: item.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-//                                }
-//                            })
-//
-//                            Button(action: { // feature
-//                                self.toggle(item, type: .featured)
-//                            }, label: {
-//                                HStack{
-//                                    Text(item.favourite ? "No destacar" : "Destacar")
-//                                    Image(systemName: item.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-//                                }
-//                            })
-//
-//                            Button(action: { // remove
-//                                self.removeItem(item: item)
-//                            }, label: {
-//                                HStack{
-//                                    Text("Eliminar")
-//                                    Image(systemName: AppConfig.menuRemove)
-//                                }
-//                            })
-//                        }
-//                        //.onTapGesture { // now using a navigation link
-//                        //}
-//
-//                        // this is the only way (right now) to remove or do not show the
-//                        // disclouser indicator in the row, first renders the content and
-//                        // after this render over an empty view, needed a ZStack to do this
-//                        NavigationLink(destination: ItemDetailView(item: item)) {
-//                            EmptyView()
-//                        }//navigation link
-//                    }
-//                }//foreach
-//                .onDelete(perform: { (indexSet) in // with onDelete, can delete a Set of items
-//                    self.removeItem(itemsSet: indexSet)
-//                })
-//            }//list
-//            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
-//            .navigationBarTitle(listTitle)
-//            .navigationBarItems(trailing:
-//                Button(action: {
-//                    self.showOptions = true
-//                }, label: {
-//                    Image(systemName: AppConfig.barShowOptions).font(.title)
-//            })
-//            )// this modificator is for present Options in modal view and the binded var is necessary to close it
-//            .sheet(isPresented: $showOptions){
-//                OptionsView().environmentObject(self.options) // dependency injection
-//            }
-            
+                    ZStack {
+                        VStack {
+                            if charty.featured {
+                                FeaturedCellView(charty: charty)
+                            } else {
+                                StandardCellView(charty: charty)
+                            }
+                        }
+                        .contextMenu {
+                                Button(action: { // feature
+                                    self.toggle(charty, type: .featured)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.featured ? "No destacar" : "Destacar")
+                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                    }
+                                })
+
+                                Button(action: { // watched
+                                    self.toggle(charty, type: .watched)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.watched ? "Marcar como no visto" : "Visto")
+                                        Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+                                    }
+                                })
+                                Button(action: { // favourite
+                                    self.toggle(charty, type: .favourite)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.favourite ? "Quitar favorito" : "Favorito")
+                                        Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+                                    }
+                                })
+
+                                Button(action: { // remove
+                                    self.removeItem(item: charty)
+                                }, label: {
+                                    HStack{
+                                        Text("Eliminar")
+                                        Image(systemName: AppConfig.menuRemove)
+                                    }
+                                })
+                        }
+                        //.onTapGesture { // now using NavigationLink
+                            //self.dumpy(charty)
+                        //}
+                        // this is the only way (right now) to remove or do not show the
+                        // disclouser indicator in the row, first renders the content and
+                        // after this render over an empty view, needed a ZStack to do this
+                        NavigationLink(destination: ItemDetailView(id: charty.id)) {
+                            EmptyView()
+                        }//navigation link
+                    }//zstack
+                }// need a ForEach instead directly a List to implement onDelete
+                .onDelete(perform: { (indexSet) in
+                    // with onDelete, can delete a Set of items
+                    self.removeItem(itemsSet: indexSet)
+                })
+            }//list
+            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
+            .navigationBarTitle(Text(listTitle))
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.showOptions = true
+                }, label: {
+                    Image(systemName: AppConfig.barShowOptions).font(.title)
+            })
+            )// this modificator is for present Options in modal view and the binded var is necessary to close it
+            .sheet(isPresented: $showOptions){
+                OptionsView().environmentObject(self.options) // dependency injection
+            }
         }//navigation view
-        
-    }
+    }//body
     
     enum ToggleType {
         case watched
@@ -227,28 +161,28 @@ struct ListView: View {
 //        }
     }
 
-//    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
-//        
-//        // When using an index need to filter and sort array previously
-//        // >> exactly in the same way that are displayed <<
-//        var itemsWithCurrentFilters = self.someItems
+    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
+        
+        // When using an index need to filter and sort array previously
+        // >> exactly in the same way that are displayed <<
+        var itemsWithCurrentFilters = viewModel.chars // TODO: review filters and sorting
 //            .filter(shouldShowItem)
 //            .sorted(by: self.options.selectedSorting.sortingPredicate(
 //                descOrder: self.options.selectedSortingOption.boolMe()))
-//        
-////        itemsSet.forEach { index in
-////            itemsWithCurrentFilters.remove(at: index)
-////        }
-//        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
-//
-//        self.someItems = itemsWithCurrentFilters
-//    }
+        
+//        itemsSet.forEach { index in
+//            itemsWithCurrentFilters.remove(at: index)
+//        }
+        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
 
-    private func shouldShowItem(_ item: AnItem) -> Bool {
+        viewModel.chars = itemsWithCurrentFilters
+    }
+
+    private func shouldShowItem(_ item: CharacterListItemDTO) -> Bool {
         let checkWatched = (self.options.showWatchedOnly && item.watched) || !self.options.showWatchedOnly
         let checkFavourite = (self.options.showFavouriteOnly && item.favourite) || !self.options.showFavouriteOnly
         let checkFeatured = (self.options.showFeaturedOnly && item.featured) || !self.options.showFeaturedOnly
-        let checkPopularity = (item.popularity <= self.options.maxPopularity)
+        let checkPopularity = (item.comics.available <= self.options.maxPopularity) // TODO: refactor maxPopularity to maxComicsAvalable
         return checkWatched && checkFavourite && checkFeatured && checkPopularity
     }
    
@@ -256,115 +190,151 @@ struct ListView: View {
 
 // MARK: - Cell Views
 
-struct CellViewTypeOne: View {
+struct CircleImageWidget: View {
     
-    var anItem: AnItem
+    @ObservedObject var imageLoader: ImageLoader
+    
+    init(url: String) {
+        imageLoader = ImageLoader(url: url)
+    }
     
     var body: some View {
-        HStack {
-            Image(anItem.image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 80, height: 80)
-                .clipped()
-                .cornerRadius(40) // half of widht to circle
+        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 90, height: 90)
+            .clipped()
+            .cornerRadius(45) // half of widht to circle
+    }
+}
+
+struct StandardCellView: View {
+    
+    var charty: CharacterListItemDTO
+    let defaultDescription = "No description, this is a text to supply it"
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            CircleImageWidget(url: String(format: "%@.%@", String(charty.thumbnail!.path), String(charty.thumbnail!.thumbnailExtension)))
 
             VStack(alignment: .leading, spacing: 1){
-                Text(anItem.author)
+                Text(String(charty.name ?? "default name"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.highlighted)
-                    .fontWeight(.bold)
+                    .fontWeight(.black)
                     .lineLimit(1)
                 HStack {
                     VStack {
-                        Text(anItem.title)
+                        Text(charty.resultDescription?.isEmpty ?? true ? defaultDescription : String(charty.resultDescription ?? "default description"))
                             .font(.system(.body, design: .rounded))
-                            .fontWeight(.regular)
-                            .lineLimit(3)
+                            .fontWeight(.none)
+                            .lineLimit(2)
                         Spacer()
                     }
-                    
                     // needed to push to the left description and image and icons view to the right
                     Spacer().layoutPriority(-10)
                     
                     VStack(alignment: .trailing, spacing: 1) {
                         Spacer() // push icons view down
-                        HStack {
-                            if anItem.favourite {
+                        VStack {
+                            if charty.favourite {
                                 Image(systemName: AppConfig.cellFav)
                                     .foregroundColor(.star)
                                 .padding(.bottom, 4)
                             }
-                            if anItem.watched {
+                            if charty.watched {
                                 Image(systemName: AppConfig.cellWatched)
                                     .foregroundColor(.eye)
                                 .padding(.bottom, 4)
                             }
                         }//hstack
                         
-                        Text(String(anItem.type))
-                            .font(.system(.subheadline, design: .rounded)).bold()
-                            .padding(.vertical, 1)
-                        
-                        Text(String(repeating: AppConfig.popularityChar, count: anItem.popularity))
-                            .font(.subheadline)//.fontWeight(.black)
-                            .padding(.top, 1)
-                        Spacer() // push icons view up to center vertically
-                    }//vstack
+                    } //vstack
                     .foregroundColor(.secondary)
                     
-                }//hstack
-            }//vstack
-        }//hstack
+                } //hstack
+                HStack {
+                    Spacer().layoutPriority(-10) // push to the right
+                    Text(String(format: "%@ comics | %@ eventos | %@ series",
+                                String(charty.comics.items.count),
+                                String(charty.events?.count ?? 0),
+                                String(charty.series?.count ?? 0)))
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                    Text(String(charty.id))
+                        .font(.system(.caption, design: .rounded)).bold()
+                } //hstack
+            } //vstack
+        } //hstack
         
     }
 }
 
-struct CellViewTypeTwo: View {
+struct BackgroundImageWidget: View {
     
-    var anItem: AnItem
+    @ObservedObject var imageLoader: ImageLoader
+    
+    init(url: String) {
+        imageLoader = ImageLoader(url: url)
+    }
     
     var body: some View {
-        
-        ZStack {
-            Image(anItem.image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .cornerRadius(15)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundColor(.gray)
-                        .opacity(0.55)
-            )
+        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 350, height: 350)
+            .cornerRadius(15)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .frame(width: 350, height: 350)
+                    .foregroundColor(.gray)
+                    .opacity(0.55)
+        )
+    }
+}
 
-            VStack(alignment: .leading, spacing: 1){
-                Text(anItem.author)
-                    .font(.system(.title, design: .rounded))
-                    .fontWeight(.semibold)
+struct FeaturedCellView: View {
+    
+    var charty: CharacterListItemDTO
+    let defaultDescription = "This character has an empty or nil description, this is a text to supply it"
+
+    var body: some View {
+        ZStack {
+            BackgroundImageWidget(url: String(format: "%@.%@", String(charty.thumbnail!.path), String(charty.thumbnail!.thumbnailExtension)))
+            
+            VStack(alignment: .center, spacing: 1){
+                Text(String(charty.name ?? "default name"))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.black)
                     .foregroundColor(.white)
 
-                Text(anItem.title)
+                Text(charty.resultDescription?.isEmpty ?? true ? defaultDescription : String(charty.resultDescription ?? "default description"))
                     .font(.system(.headline, design: .rounded))
                     .fontWeight(.regular)
                     .foregroundColor(.white)
+                    .lineLimit(4)
                 
                 Spacer()
-                HStack(alignment: .center, spacing: 5) {
-                    HStack {
-                        if anItem.favourite  { Image(systemName: AppConfig.cellFav) }
-                        if anItem.watched { Image(systemName: AppConfig.cellWatched) }
-                    }
+                HStack(alignment: .bottom, spacing: 5) {
                     Spacer()
-                    Text(String(repeating: "", count: anItem.popularity))
-                    Text(String("| " + anItem.type))
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            if charty.favourite  { Image(systemName: AppConfig.cellFav) }
+                            if charty.watched { Image(systemName: AppConfig.cellWatched) }
+                        }
+                        Text(String(charty.id))
+                        Text(String(format: "%@ comics | %@ eventos | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
+                    }
                 }
                 .font(.system(.headline, design: .rounded))
-                .foregroundColor(.white)//(Color(.systemPink))
+                .foregroundColor(.white)
             }//vstack
-            .padding()
+        .padding()
         }//zstack
     }
 }
+
 
 // MARK: - Preview
 

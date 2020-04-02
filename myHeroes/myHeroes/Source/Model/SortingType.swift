@@ -12,7 +12,7 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
     case alphabetical = 0
     case byAuthor = 1
     case byType = 2
-    case popularity = 3
+    case comicsAvailable = 3
     case watched = 4
     case favourite = 5
     case featured = 6
@@ -27,7 +27,7 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         case 2:
             self = .byType
         case 3:
-            self = .popularity
+            self = .comicsAvailable
         case 4:
             self = .watched
         case 5:
@@ -48,7 +48,7 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
             return "Por autor"
         case .byType:
             return "Por tipo"
-        case .popularity:
+        case .comicsAvailable:
             return "Popularidad"
         case .watched:
             return "Vistos"
@@ -59,37 +59,37 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         }
     }
     
-    func sortingPredicate() -> ((AnItem, AnItem) -> Bool){
-        
-        switch self {
-            case .alphabetical:
-                return {$0.title < $1.title}
-            case .byAuthor:
-                return {$0.author < $1.author}
-            case .byType:
-                return {$0.type < $1.type}
-            case .popularity:
-                return {$0.popularity < $1.popularity}
-            case .watched:
-                return {$0.watched && !$1.watched}
-            case .favourite:
-                return {$0.favourite && !$1.favourite}
-            case .featured:
-                return {$0.featured && !$1.featured}
-        }
-    }
+//    func sortingPredicate() -> ((AnItem, AnItem) -> Bool){
+//
+//        switch self {
+//            case .alphabetical:
+//                return {$0.title < $1.title}
+//            case .byAuthor:
+//                return {$0.author < $1.author}
+//            case .byType:
+//                return {$0.type < $1.type}
+//            case .comicsAvailable:
+//                return {$0.popularity < $1.popularity}
+//            case .watched:
+//                return {$0.watched && !$1.watched}
+//            case .favourite:
+//                return {$0.favourite && !$1.favourite}
+//            case .featured:
+//                return {$0.featured && !$1.featured}
+//        }
+//    }
     
-    func sortingPredicate(descOrder: Bool = true) -> ((AnItem, AnItem) -> Bool){
+    func sortingPredicate(descOrder: Bool = true) -> ((CharacterListItemDTO, CharacterListItemDTO) -> Bool){
         
         switch self {
             case .alphabetical:
-                return descOrder ? {$0.title < $1.title} : {$0.title > $1.title}
+                return {_,_ in true}//descOrder ? {$0.title < $1.title} : {$0.title > $1.title}
             case .byAuthor:
-                return descOrder ? {$0.author < $1.author} : {$0.author > $1.author}
+                return {_,_ in true}//descOrder ? {$0.author < $1.author} : {$0.author > $1.author}
             case .byType:
-                return descOrder ? {$0.type < $1.type} : {$0.type > $1.type}
-            case .popularity:
-                return descOrder ? {$0.popularity < $1.popularity} : {$0.popularity > $1.popularity}
+                return {_,_ in true}//descOrder ? {$0.type < $1.type} : {$0.type > $1.type}
+            case .comicsAvailable:
+                return descOrder ? {$0.comics.available < $1.comics.available} : {$0.comics.available > $1.comics.available}
             case .watched:
                 return descOrder ? {$0.watched && !$1.watched} : {!$0.watched && $1.watched}
             case .favourite:

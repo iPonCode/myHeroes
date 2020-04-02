@@ -50,14 +50,6 @@ struct ApiConfig {
     static let baseURL: String = ""
     
     // TODO: Endpoints for diferent webservice
-    enum EndPoint: String {
-        case serverA = "serverA"
-        case serverB = "serverB" // aditional endPoint
-        
-        init(value: String){
-            self = EndPoint(rawValue: value) ?? EndPoint.serverA
-        }
-    }
 
     // TODO: Declare headers for webservice here if needed
 

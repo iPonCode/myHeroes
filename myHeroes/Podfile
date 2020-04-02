@@ -8,5 +8,6 @@ target 'myHeroes' do
   # Pods for myHeroes
 
   pod 'Alamofire', '5.0.5'
+  pod 'AlamofireImage', '4.0.3'
 
 end
