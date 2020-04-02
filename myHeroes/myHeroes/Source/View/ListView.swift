@@ -11,8 +11,6 @@ struct ListView: View {
     
     @State var showOptions: Bool = false
     
-    @State var someItems = AnItemsFactory.someItems
-    
     @EnvironmentObject var options: OptionsFactory
     
     @ObservedObject var viewModel = HeroesListViewModel()
