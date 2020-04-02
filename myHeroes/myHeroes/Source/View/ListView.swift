@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
 
 struct ListView: View {
     
@@ -65,12 +64,21 @@ struct ListView: View {
                     ZStack {
                         VStack {
                             if charty.featured {
-                                CellViewFeatured(charty: charty)
+                                FeaturedCellView(charty: charty)
                             } else {
-                                CellViewFeatured(charty: charty)
+                                StandardCellView(charty: charty)
                             }
                         }
                         .contextMenu {
+                                Button(action: { // feature
+                                    self.toggle(charty, type: .featured)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.featured ? "No destacar" : "Destacar")
+                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                    }
+                                })
+
                                 Button(action: { // watched
                                     self.toggle(charty, type: .watched)
                                 }, label: {
@@ -85,15 +93,6 @@ struct ListView: View {
                                     HStack{
                                         Text(charty.favourite ? "Quitar favorito" : "Favorito")
                                         Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                    }
-                                })
-
-                                Button(action: { // feature
-                                    self.toggle(charty, type: .featured)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.featured ? "No destacar" : "Destacar")
-                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
                                     }
                                 })
 
@@ -205,41 +204,41 @@ struct CircleImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 80, height: 80)
+            .frame(width: 90, height: 90)
             .clipped()
-            .cornerRadius(40) // half of widht to circle
+            .cornerRadius(45) // half of widht to circle
     }
 }
 
-struct CellViewTypeOne: View {
+struct StandardCellView: View {
     
     var charty: CharacterListItemDTO
+    let defaultDescription = "No description, this is a text to supply it"
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top, spacing: 8) {
             CircleImageWidget(url: String(format: "%@.%@", String(charty.thumbnail!.path), String(charty.thumbnail!.thumbnailExtension)))
 
             VStack(alignment: .leading, spacing: 1){
                 Text(String(charty.name ?? "default name"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.highlighted)
-                    .fontWeight(.bold)
+                    .fontWeight(.black)
                     .lineLimit(1)
                 HStack {
                     VStack {
-                        Text(String(charty.resultDescription ?? "default description"))
+                        Text(charty.resultDescription?.isEmpty ?? true ? defaultDescription : String(charty.resultDescription ?? "default description"))
                             .font(.system(.body, design: .rounded))
-                            .fontWeight(.regular)
-                            .lineLimit(3)
+                            .fontWeight(.none)
+                            .lineLimit(2)
                         Spacer()
                     }
-                    
                     // needed to push to the left description and image and icons view to the right
                     Spacer().layoutPriority(-10)
                     
                     VStack(alignment: .trailing, spacing: 1) {
                         Spacer() // push icons view down
-                        HStack {
+                        VStack {
                             if charty.favourite {
                                 Image(systemName: AppConfig.cellFav)
                                     .foregroundColor(.star)
@@ -252,20 +251,24 @@ struct CellViewTypeOne: View {
                             }
                         }//hstack
                         
-//                        Text(String(anItem.type))
-//                            .font(.system(.subheadline, design: .rounded)).bold()
-//                            .padding(.vertical, 1)
-//
-//                        Text(String(repeating: AppConfig.popularityChar, count: anItem.popularity))
-//                            .font(.subheadline)//.fontWeight(.black)
-//                            .padding(.top, 1)
-                        Spacer() // push icons view up to center vertically
-                    }//vstack
+                    } //vstack
                     .foregroundColor(.secondary)
                     
-                }//hstack
-            }//vstack
-        }//hstack
+                } //hstack
+                HStack {
+                    Spacer().layoutPriority(-10) // push to the right
+                    Text(String(format: "%@ comics | %@ eventos | %@ series",
+                                String(charty.comics.items.count),
+                                String(charty.events?.count ?? 0),
+                                String(charty.series?.count ?? 0)))
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                    Text(String(charty.id))
+                        .font(.system(.caption, design: .rounded)).bold()
+                } //hstack
+            } //vstack
+        } //hstack
         
     }
 }
@@ -282,19 +285,22 @@ struct BackgroundImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
+            .frame(width: 350, height: 350)
             .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
+                    .frame(width: 350, height: 350)
                     .foregroundColor(.gray)
                     .opacity(0.55)
         )
     }
 }
 
-struct CellViewFeatured: View {
+struct FeaturedCellView: View {
     
     var charty: CharacterListItemDTO
-    
+    let defaultDescription = "This character has an empty or nil description, this is a text to supply it"
+
     var body: some View {
         ZStack {
             BackgroundImageWidget(url: String(format: "%@.%@", String(charty.thumbnail!.path), String(charty.thumbnail!.thumbnailExtension)))
@@ -305,7 +311,7 @@ struct CellViewFeatured: View {
                     .fontWeight(.black)
                     .foregroundColor(.white)
 
-                Text(String(charty.resultDescription ?? "default description"))
+                Text(charty.resultDescription?.isEmpty ?? true ? defaultDescription : String(charty.resultDescription ?? "default description"))
                     .font(.system(.headline, design: .rounded))
                     .fontWeight(.regular)
                     .foregroundColor(.white)
