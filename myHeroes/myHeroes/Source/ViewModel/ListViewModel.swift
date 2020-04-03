@@ -1,4 +1,4 @@
-//  HeroesListViewModel.swift
+//  ListViewModel.swift
 //  myHeroes
 //
 //  Created by Simón Aparicio on 31/03/2020.
@@ -6,9 +6,9 @@
 //
 
 import Foundation
-//import Combine
+import Combine
 
-class HeroesListViewModel: ObservableObject {
+class ListViewModel: ObservableObject {
         
     @Published var chars = [CharacterListItemDTO]()
 
@@ -20,7 +20,7 @@ class HeroesListViewModel: ObservableObject {
             
             guard let data = data else { return }
             
-            let networkResponse = try! JSONDecoder().decode(NetworkResponseDTO.self, from: data)
+            let networkResponse = try! JSONDecoder().decode(NetworkListResponseDTO.self, from: data)
             DispatchQueue.main.async {
                 if let characters = networkResponse.data?.results{
                      self.chars = characters

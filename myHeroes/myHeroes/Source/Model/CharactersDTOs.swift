@@ -7,19 +7,19 @@
 
 import Foundation
 
-// MARK: Response
-public struct NetworkResponseDTO: Codable {
+// MARK: List Response
+public struct NetworkListResponseDTO: Codable {
     let code: Int
     let status, copyright, attributionText, attributionHTML: String?
     let etag: String?
-    let data: ResponseDataDTO?
+    let data: ListResponseDataDTO?
     
     private enum CodingKeys: String, CodingKey {
         case code, status, copyright, attributionText, attributionHTML, etag, data
     }
 }
 
-public struct ResponseDataDTO: Codable {
+public struct ListResponseDataDTO: Codable {
     let offset, limit, total, count: Int
     let results: [CharacterListItemDTO]
 }
@@ -72,3 +72,58 @@ public struct ComicsItemDTO: Codable {
     let resourceURI: String
     let name: String
 }
+
+
+// MARK: Detail Response
+public struct NetworkDetailResponseDTO: Codable {
+    let code: Int
+    let status, copyright, attributionText, attributionHTML: String?
+    let etag: String?
+    let data: DetailResponseDataDTO?
+    
+    private enum CodingKeys: String, CodingKey {
+        case code, status, copyright, attributionText, attributionHTML, etag, data
+    }
+}
+
+public struct DetailResponseDataDTO: Codable {
+    let offset, limit, total, count: Int
+    let results: [CharacterDTO]
+}
+
+// MARK: Character Details
+struct CharacterDTO: Codable {
+    let id: Int
+    let name, resultDescription: String
+    let thumbnail: ThumbnailDTO
+    let resourceURI: String
+    let comics, series: ComicsDTO
+    let stories: StoriesDTO
+    let events: ComicsDTO
+    let urls: [URLElementDTO]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case resultDescription = "description"
+        case thumbnail, resourceURI, comics, series, stories, events, urls
+    }
+}
+
+public struct StoriesDTO: Codable {
+    let available: Int
+    let collectionURI: String
+    let items: [StoriesItemDTO]
+    let returned: Int
+}
+
+public struct StoriesItemDTO: Codable {
+    let resourceURI: String
+    let name: String
+    let type: String
+}
+
+public struct URLElementDTO: Codable {
+    let type: String
+    let url: String
+}
+
