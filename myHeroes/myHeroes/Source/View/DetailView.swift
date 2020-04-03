@@ -17,6 +17,7 @@ struct DetailView: View {
                              """
 
     @ObservedObject var viewModel: DetailViewModel
+    @State private var selectedItemList = ItemListType.comics
     
     init(id: Int) {
         self.viewModel = DetailViewModel(id)
@@ -24,46 +25,68 @@ struct DetailView: View {
     
     var body: some View {
         
-                ScrollView {
-                    VStack {
+//        ScrollView(showsIndicators: true) {
+            VStack {
+                VStack{
+                    ZStack(alignment: .bottom) {
                         HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys.first?.thumbnail.path ?? "")), String((viewModel.chartys.first?.thumbnail.thumbnailExtension ?? "")))
                         )
-
-                        HStack {
-                            Text(String(format: "%@ comics | %@ events | %@ series", String(viewModel.chartys.first?.comics.items.count ?? 0), String(viewModel.chartys.first?.events.items.count ?? 0), String(viewModel.chartys.first?.series.items.count ?? 0)))
-                                .font(.system(.headline, design: .rounded)).fontWeight(.black)
-                                .foregroundColor(.secondary)
+                        Picker(selection: $selectedItemList, label: Text("Select an items list")){
+                            ForEach(ItemListType.allCases, id: \.self){ itemListType in
+                                Text(itemListType.description)
+                            }
                         }
-                        .padding()
-
-                        Text(String(viewModel.chartys.first?.name ?? "no name"))
-                            .font(.system(.largeTitle, design: .rounded))
-                            .foregroundColor(.highlighted)
-                            .fontWeight(.black)
-                            .padding()
-
-                        Text(String(viewModel.chartys.first?.id ?? 0))
-                            .font(.system(.title, design: .rounded)).fontWeight(.heavy)
-                            .foregroundColor(.secondary)
-
-                        Text(
-                            viewModel.chartys.first?.resultDescription.isEmpty ?? false ?
-                                defaultDescription :
-                                String(viewModel.chartys.first?.resultDescription ?? defaultDescription)
-                        )
-                            .font(.system(.body, design: .rounded))
-                            .padding()
-
-                        Text(String(viewModel.chartys.description))
-                            .font(.system(.body, design: .rounded))
-                            .padding()
-                        
-                        Spacer() // to push all the content up
+                        .padding(.horizontal)
+                        .background(Color.secondary)
+                        .pickerStyle(SegmentedPickerStyle())
                     }
                 }
-                .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys.first?.id ?? 0, detailsTitle)), displayMode: .inline)
+                VStack{
+                    List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
+                        ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                    }
+                } // vstack
+                .padding(.horizontal)
+            } // vstack
+            .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys.first?.id ?? 0, detailsTitle)), displayMode: .inline)
+
+//        } // scrollview
+    } // body
+
+}
+
+struct ComicCellView: View {
+    
+    var name: String
+    var resourceURI: String
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Image(systemName: "link.circle")
+                .foregroundColor(.secondary)
+            VStack(alignment: .leading, spacing: 1){
+                Text(name)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.highlighted)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                HStack {
+                    VStack {
+                        Text(resourceURI)
+                            .font(.system(.caption, design: .rounded))
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                        Spacer()
+                    }
+                    // needed to push to the left description and image and icons view to the right
+                    Spacer().layoutPriority(-10)
+                } //hstack
+            } //vstack
+        } //hstack
+        
     }
 }
+
 
 struct HeaderImageWidget: View {
     
@@ -76,8 +99,12 @@ struct HeaderImageWidget: View {
     var body: some View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
-            .aspectRatio(contentMode: .fit)
-            //.cornerRadius(35)
+            .aspectRatio(contentMode: .fill)
+            .overlay(
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .opacity(0.35)
+        )
     }
 }
 
