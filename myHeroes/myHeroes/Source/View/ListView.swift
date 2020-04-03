@@ -256,7 +256,7 @@ struct StandardCellView: View {
                 } //hstack
                 HStack {
                     Spacer().layoutPriority(-10) // push to the right
-                    Text(String(format: "%@ comics | %@ eventos | %@ series",
+                    Text(String(format: "%@ comics | %@ events | %@ series",
                                 String(charty.comics.items.count),
                                 String(charty.events?.count ?? 0),
                                 String(charty.series?.count ?? 0)))
@@ -285,9 +285,9 @@ struct BackgroundImageWidget: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 350, height: 350)
-            .cornerRadius(15)
+            .cornerRadius(35)
             .overlay(
-                RoundedRectangle(cornerRadius: 15)
+                RoundedRectangle(cornerRadius: 35)
                     .frame(width: 350, height: 350)
                     .foregroundColor(.gray)
                     .opacity(0.55)
@@ -325,7 +325,7 @@ struct FeaturedCellView: View {
                             if charty.watched { Image(systemName: AppConfig.cellWatched) }
                         }
                         Text(String(charty.id))
-                        Text(String(format: "%@ comics | %@ eventos | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
+                        Text(String(format: "%@ comics | %@ events | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
                     }
                 }
                 .font(.system(.headline, design: .rounded))

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
 
-    let detailsTitle = "Más detalles"
+    let detailsTitle = "Details"
     let defaultName = "Nameless Character"
     let defaultDescription = """
                              This character has an empty or nil description, this is a text to supply it…
@@ -26,11 +26,11 @@ struct DetailView: View {
         
                 ScrollView {
                     VStack {
-                        Image("placeholder")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                        HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys.first?.thumbnail.path ?? "")), String((viewModel.chartys.first?.thumbnail.thumbnailExtension ?? "")))
+                        )
+
                         HStack {
-                            Text(String(format: "%@ comics | %@ eventos | %@ series", String(viewModel.chartys.first?.comics.items.count ?? 0), String(viewModel.chartys.first?.events.items.count ?? 0), String(viewModel.chartys.first?.series.items.count ?? 0)))
+                            Text(String(format: "%@ comics | %@ events | %@ series", String(viewModel.chartys.first?.comics.items.count ?? 0), String(viewModel.chartys.first?.events.items.count ?? 0), String(viewModel.chartys.first?.series.items.count ?? 0)))
                                 .font(.system(.headline, design: .rounded)).fontWeight(.black)
                                 .foregroundColor(.secondary)
                         }
@@ -61,7 +61,23 @@ struct DetailView: View {
                         Spacer() // to push all the content up
                     }
                 }
-                .navigationBarTitle(Text(detailsTitle), displayMode: .inline)
+                .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys.first?.id ?? 0, detailsTitle)), displayMode: .inline)
+    }
+}
+
+struct HeaderImageWidget: View {
+    
+    @ObservedObject var imageLoader: ImageLoader
+    
+    init(url: String) {
+        imageLoader = ImageLoader(url: url)
+    }
+    
+    var body: some View {
+        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            //.cornerRadius(35)
     }
 }
 
