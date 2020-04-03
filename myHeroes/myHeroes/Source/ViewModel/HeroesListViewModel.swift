@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+//import Combine
 
 class HeroesListViewModel: ObservableObject {
         
@@ -32,14 +32,12 @@ class HeroesListViewModel: ObservableObject {
     
     private func getCharactersListUrl() -> String {
         
-        // TODO: Move Api configuration
-        let baseUrl = "https://gateway.marvel.com:443/v1/public/characters"
-        let privateKey = "8074772204a5fa9445ca96c81837f2b6d85b546b"
-        let publicKey = "1de4fe3d3a6a89ba1e61bb34889865f1"
         let timeStamp = Date().timeIntervalSince1970
-        let ts = String(format:"%.f",timeStamp)
-        let hashChecksum = String(format: "%.f%@%@", timeStamp, privateKey, publicKey).md5()
-        let url = baseUrl + "?ts=" + ts + "&apikey=" + publicKey + "&hash=" + hashChecksum
-        return url
+        let ts = String(format:"%.f", timeStamp)
+        let hashChecksum = String(format: "%.f%@%@",
+                                  timeStamp,
+                                  ApiConfig.privateKey,
+                                  ApiConfig.publicKey).md5()
+        return ApiConfig.baseUrl + "?ts=" + ts + "&apikey=" + ApiConfig.publicKey + "&hash=" + hashChecksum
     }
 }

@@ -23,18 +23,17 @@ struct AppConfig {
     static let barCloseOptions = "table.badge.more.fill"
     
     // Menu icons
+    static let menuFeat = "rectangle.expand.vertical"
+    static let menuUnFeat = "rectangle.compress.vertical"
     static let menuFav = "star"
     static let menuUnFav = "star.slash"
     static let menuWatch = "eye"
     static let menuUnWatch = "eye.slash"
     static let menuRemove = "trash"
-    static let menuFeat = "rectangle.expand.vertical"
-    static let menuUnFeat = "rectangle.compress.vertical"
 
     // Cell icons
     static let cellFav = "star.fill"
     static let cellWatched = "eye.fill"
-    static let popularityChar = ""
 
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here
@@ -46,9 +45,10 @@ struct AppConfig {
 
 struct ApiConfig {
 
-    // TODO: URLs base for requests Servers
-    static let baseURL: String = ""
-    
+    static let baseUrl = "https://gateway.marvel.com:443/v1/public/characters"
+    static let privateKey = "8074772204a5fa9445ca96c81837f2b6d85b546b"
+    static let publicKey = "1de4fe3d3a6a89ba1e61bb34889865f1"
+
     // TODO: Endpoints for diferent webservice
 
     // TODO: Declare headers for webservice here if needed
