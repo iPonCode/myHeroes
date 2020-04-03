@@ -20,7 +20,7 @@ struct OptionsView: View {
     @State private var showFavouriteOnly = false
     @State private var showFeaturedOnly = false
     @State private var minComicsAvailable = 0 {
-        didSet { // limit the max and min value that the user can selected for popularity filter
+        didSet { // limit the max and min value that the user can selected
             if minComicsAvailable > 50 { minComicsAvailable = 50 }
             if minComicsAvailable < 0 { minComicsAvailable = 0 }
         }

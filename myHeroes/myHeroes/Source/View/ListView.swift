@@ -13,7 +13,7 @@ struct ListView: View {
     
     @EnvironmentObject var options: OptionsFactory
     
-    @ObservedObject var viewModel = HeroesListViewModel()
+    @ObservedObject var viewModel = ListViewModel()
     
     let listTitle = "Personajes Marvel"
     
@@ -110,7 +110,7 @@ struct ListView: View {
                         // this is the only way (right now) to remove or do not show the
                         // disclouser indicator in the row, first renders the content and
                         // after this render over an empty view, needed a ZStack to do this
-                        NavigationLink(destination: ItemDetailView(id: charty.id)) {
+                        NavigationLink(destination: DetailView(id: charty.id)) {
                             EmptyView()
                         }//navigation link
                     }//zstack
