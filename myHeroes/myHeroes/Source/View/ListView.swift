@@ -284,11 +284,11 @@ struct BackgroundImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 350, height: 350)
+            .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
             .cornerRadius(35)
             .overlay(
                 RoundedRectangle(cornerRadius: 35)
-                    .frame(width: 350, height: 350)
+                    .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
                     .foregroundColor(.gray)
                     .opacity(0.55)
         )

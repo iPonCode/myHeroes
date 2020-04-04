@@ -62,7 +62,7 @@ struct ComicCellView: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
-            Image(systemName: "link.circle")
+            Image(systemName: AppConfig.cellLink)
                 .foregroundColor(.secondary)
             VStack(alignment: .leading, spacing: 1){
                 Text(name)
@@ -100,8 +100,10 @@ struct HeaderImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
+            //.frame(idealWidth: AppConfig.screenWidth, maxHeight: AppConfig.maxHeightHeaderImageWidget)
             .overlay(
                 Rectangle()
+                    //.frame(idealWidth: AppConfig.screenWidth, maxHeight: AppConfig.maxHeightHeaderImageWidget)
                     .foregroundColor(.gray)
                     .opacity(0.35)
         )

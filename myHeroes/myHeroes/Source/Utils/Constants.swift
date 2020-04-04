@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // For readability and to have all about configuration located in one place
 
@@ -34,6 +35,15 @@ struct AppConfig {
     // Cell icons
     static let cellFav = "star.fill"
     static let cellWatched = "eye.fill"
+    static let cellLink = "link.circle"
+    
+    // Screen size
+    static let screenSize: CGRect = UIScreen.main.bounds
+    static let screenWidth = screenSize.width
+    static let screenHeight = screenSize.height
+    static let widthBackgroundImageWidget = screenWidth - ((screenWidth * 8) / 100)
+    static let maxHeightBackgroundImageWidget = screenHeight - ((screenHeight * 55) / 100)
+    static let maxHeightHeaderImageWidget = screenHeight - ((screenHeight * 75) / 100)
 
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here
