@@ -10,7 +10,6 @@ import SwiftUI
 struct OptionsView: View {
 
     @Environment(\.presentationMode) var presentationMode
-    
     @EnvironmentObject var options: OptionsFactory
 
     // set default values
@@ -69,7 +68,7 @@ struct OptionsView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                 }
                 
-            }//form
+            } //form
             .navigationBarTitle(optionsTitle)
             //.navigationBarTitle(Text(optionsTitle), displayMode: .inline)
                 
@@ -92,12 +91,12 @@ struct OptionsView: View {
 
                 self.presentationMode.wrappedValue.dismiss() // close view
                 }, label: {
-                    Image(systemName: "rectangle.fill.badge.checkmark")
+                    Image(systemName: AppConfig.barSaveOptions)
                         .font(Font(UIFont.AppFont.compactTitle))
                 })
             )
         
-        }//navigation view
+        } //navigation view
         .onAppear { // Load saved options
             self.selectedSorting = self.options.selectedSorting
             self.selectedSortingOption = self.options.selectedSortingOption

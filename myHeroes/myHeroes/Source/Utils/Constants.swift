@@ -20,7 +20,7 @@ struct AppConfig {
     static let barBack = "rectangle.grid.1x2.fill"
     static let barBackTrans = "rectangle.grid.1x2"
     static let barShowOptions = "table.badge.more.fill"
-    static let barSaveOptions = "table.badge.more.fill"
+    static let barSaveOptions = "rectangle.fill.badge.checkmark"
     static let barCloseOptions = "table.badge.more.fill"
     
     // Menu icons

@@ -9,66 +9,82 @@ import SwiftUI
 
 struct DetailView: View {
 
-//    let detailsTitle = "Details"
-//    let defaultName = "Nameless Character"
-    let defaultDescription = """
-                             This character has an empty or nil description, this is a text to supply it. If you are going to use a passage of Lorem Ipsum…
-                             """
-
     @ObservedObject var viewModel: DetailViewModel
     @State private var selectedItemList = ItemListType.comics
-    
+    @Environment(\.presentationMode) var presentationMode
+
+    let defaultDescription = "This character has an empty or nil description, this is a text to supply it…"
+
     init(id: Int) {
         self.viewModel = DetailViewModel(id)
     }
     
     var body: some View {
         
-//        ScrollView(showsIndicators: true) {
-            VStack {
-                VStack{
-                    ZStack{
-                        ZStack(alignment: .bottom) {
-                            HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys[0].thumbnail.path)), String((viewModel.chartys[0].thumbnail.thumbnailExtension)))
-                            )
-                            Picker(selection: $selectedItemList, label: Text("Select an items list")){
-                                ForEach(ItemListType.allCases, id: \.self){ itemListType in
-                                    Text(itemListType.description)
-                                }
+        VStack {
+            VStack{
+                ZStack{
+                    ZStack(alignment: .bottom) {
+                        HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys[0].thumbnail.path)), String((viewModel.chartys[0].thumbnail.thumbnailExtension)))
+                        )
+                        Picker(selection: $selectedItemList, label: Text("Select an items list")){
+                            ForEach(ItemListType.allCases, id: \.self){ itemListType in
+                                Text(itemListType.description)
                             }
-                            .padding(.horizontal)
-                            .background(Color.segmentedPickerBackground)
-                            .pickerStyle(SegmentedPickerStyle())
                         }
-                        VStack(alignment: .center, spacing: 1) {
-                            Spacer()
-                            HStack(alignment: .top, spacing: 5) {
-                                Spacer()
-                                Text(String(viewModel.chartys[0].id))
-                            }
-                            Text(viewModel.chartys[0].resultDescription.isEmpty ? defaultDescription : String(viewModel.chartys[0].resultDescription))
-                                .font(.system(.headline, design: .rounded))
-                                .fontWeight(.regular)
-                                .foregroundColor(.white)
-                                //.lineLimit(4)
-                        }
-                        .padding()
-                        .padding(.vertical, 50)
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white)
-                    } //zstack
-                }
-                VStack{
-                    List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
-                        ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                        .padding(.horizontal)
+                        .frame(height: 50)
+                        .background(Color.segmentedPickerBackground)
+                        .pickerStyle(SegmentedPickerStyle())
                     }
-                } // vstack
-                .padding(.horizontal)
+                    VStack(alignment: .center, spacing: 1) {
+                        Spacer()
+                        HStack(alignment: .top, spacing: 5) {
+                            Spacer()
+                            VStack(alignment: .trailing){
+                                Text(String(viewModel.chartys[0].name))
+                                    .font(.system(.title, design: .rounded))
+                                    .fontWeight(.black)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.trailing)
+                                Text(String(viewModel.chartys[0].id))
+                                    .font(.system(.headline, design: .rounded))
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.trailing)
+                                Text(viewModel.chartys[0].resultDescription.isEmpty ? defaultDescription : String(viewModel.chartys[0].resultDescription))
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.trailing)
+                                    //.lineLimit(4)
+                            }
+                        }
+                    }
+                    .padding()
+                    .padding(.vertical, 50)
+                } //zstack
+            }
+            VStack{
+                List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
+                    ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                }
             } // vstack
-            .navigationBarTitle(Text(String(format: "%@", viewModel.chartys[0].name)), displayMode: .inline)
-//            .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys[0].id, detailsTitle)), displayMode: .inline)
+            .padding(.horizontal)
+        } // vstack
+        //.navigationBarTitle(Text(String(format: "%@", viewModel.chartys[0].name)), displayMode: .inline)
+        .edgesIgnoringSafeArea(.top) // the top image goes up
+        .navigationBarBackButtonHidden(true) // will create a custom back button
+        .navigationBarItems(leading:
+        Button(action: { // go back using this environment var (SwiftUI)
+            self.presentationMode.wrappedValue.dismiss()
+        }, label: {
+            Image(systemName: AppConfig.barBack)
+                .font(.largeTitle)
+                .foregroundColor(.barBackButton)
+        })
+        )
 
-//        } // scrollview
     } // body
 
 }

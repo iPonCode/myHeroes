@@ -24,6 +24,8 @@ extension Color {
 
     static let highlighted = Color.pink
     static let barButton = Color.blue
+    static let barBackButton = Color.white
+    static let barTitles = Color.blue
 
     static let star = Color.yellow
     static let eye = Color.purple
