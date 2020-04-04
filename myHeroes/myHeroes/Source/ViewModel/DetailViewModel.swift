@@ -10,7 +10,7 @@ import Combine
 
 class DetailViewModel: ObservableObject {
         
-    @Published var chartys : [CharacterDTO] = []
+    @Published var charty = CharacterDTO()
 
     init(_ id: Int) {
         
@@ -22,8 +22,8 @@ class DetailViewModel: ObservableObject {
             
             let networkResponse = try! JSONDecoder().decode(NetworkDetailResponseDTO.self, from: data)
             DispatchQueue.main.async {
-                if let character = networkResponse.data?.results{
-                     self.chartys = character
+                if let character = networkResponse.data?.results.first{
+                     self.charty = character
                 }
             }
         }.resume()
@@ -42,5 +42,16 @@ class DetailViewModel: ObservableObject {
 
         return ApiConfig.baseUrl + "/" + String(id) + "?ts=" + ts + "&apikey=" +
                ApiConfig.publicKey + "&hash=" + hashChecksum
+    }
+
+    private func getComicsItemUrl(_ resourceURI: String) -> String {
+        
+        let timeStamp = Date().timeIntervalSince1970
+        let ts = String(format:"%.f", timeStamp)
+        let hashChecksum = String(format: "%.f%@%@",
+                                  timeStamp,
+                                  ApiConfig.privateKey,
+                                  ApiConfig.publicKey).md5()
+        return resourceURI + "?ts=" + ts + "&apikey=" + ApiConfig.publicKey + "&hash=" + hashChecksum
     }
 }

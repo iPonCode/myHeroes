@@ -112,6 +112,23 @@ struct CharacterDTO: Codable {
         case resultDescription = "description"
         case thumbnail, resourceURI, comics, series, stories, events, urls
     }
+    
+    init() {
+        self.id = 0
+        self.name = ""
+        self.resultDescription = ""
+        self.thumbnail = ThumbnailDTO(path: "", thumbnailExtension: "")
+        self.resourceURI = ""
+        self.comics = ComicsDTO(available: 0, collectionURI: "",
+                                items: [ComicsItemDTO](), returned: 0)
+        self.series = ComicsDTO(available: 0, collectionURI: "",
+                                items: [ComicsItemDTO](), returned: 0)
+        self.events = ComicsDTO(available: 0, collectionURI: "",
+                                items: [ComicsItemDTO](), returned: 0)
+        self.stories = StoriesDTO(available: 0, collectionURI: "",
+                                items: [StoriesItemDTO](), returned: 0)
+        self.urls = [URLElementDTO]()
+    }
 }
 
 public struct StoriesDTO: Codable {

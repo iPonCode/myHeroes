@@ -12,6 +12,8 @@ struct DetailView: View {
     @ObservedObject var viewModel: DetailViewModel
     @State private var selectedItemList = ItemListType.comics
     @Environment(\.presentationMode) var presentationMode
+    @State var showLink: Bool = false
+    @State var selectedComicsItem: ComicsItemDTO?
 
     let defaultDescription = "This character has an empty or nil description, this is a text to supply it…"
 
@@ -23,36 +25,29 @@ struct DetailView: View {
         
         VStack {
             VStack{
-                ZStack{
-                    ZStack(alignment: .bottom) {
-                        HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys[0].thumbnail.path)), String((viewModel.chartys[0].thumbnail.thumbnailExtension)))
+                ZStack(alignment: .bottom) {
+                    
+                    ZStack {
+                        HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.charty.thumbnail.path)), String((viewModel.charty.thumbnail.thumbnailExtension)))
                         )
-                        Picker(selection: $selectedItemList, label: Text("Select an items list")){
-                            ForEach(ItemListType.allCases, id: \.self){ itemListType in
-                                Text(itemListType.description)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .frame(height: 50)
-                        .background(Color.segmentedPickerBackground)
-                        .pickerStyle(SegmentedPickerStyle())
                     }
+                    
                     VStack(alignment: .center, spacing: 1) {
                         Spacer()
                         HStack(alignment: .top, spacing: 5) {
                             Spacer()
                             VStack(alignment: .trailing){
-                                Text(String(viewModel.chartys[0].name))
+                                Text(String(viewModel.charty.name))
                                     .font(.system(.title, design: .rounded))
                                     .fontWeight(.black)
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.trailing)
-                                Text(String(viewModel.chartys[0].id))
+                                Text(String(viewModel.charty.id))
                                     .font(.system(.headline, design: .rounded))
                                     .fontWeight(.heavy)
                                     .foregroundColor(.secondary)
                                     .multilineTextAlignment(.trailing)
-                                Text(viewModel.chartys[0].resultDescription.isEmpty ? defaultDescription : String(viewModel.chartys[0].resultDescription))
+                                Text(viewModel.charty.resultDescription.isEmpty ? defaultDescription : String(viewModel.charty.resultDescription))
                                     .font(.system(.body, design: .rounded))
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
@@ -63,16 +58,47 @@ struct DetailView: View {
                     }
                     .padding()
                     .padding(.vertical, 50)
+                    
+                    Picker(selection: $selectedItemList, label: Text("Select an items list")){
+                        ForEach(ItemListType.allCases, id: \.self){ itemListType in
+                            Text(itemListType.description)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .frame(height: 50)
+                    .background(Color.segmentedPickerBackground)
+                    .pickerStyle(SegmentedPickerStyle())
+
                 } //zstack
+
             }
             VStack{
-                List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
-                    ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                if self.selectedItemList.selectedItemList(self.viewModel.charty).isEmpty {
+                    EmptyComicsItemList(type: selectedItemList.description)
+                } else {
+                    List(selectedItemList.selectedItemList(viewModel.charty), id: \.id) { item in
+                        VStack {
+                            ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                        }
+                        .onTapGesture {
+                            self.selectedComicsItem = item
+                            self.showLink = true
+                            print("link cell tapped: \(item.id) --> \(item.resourceURI)")
+                        }
+                    } // list
+                    // this modificator is for present Webview in modal view and the binded var is necessary to close it
+                    .sheet(isPresented: self.$showLink){
+                        if self.selectedComicsItem != nil {
+                            //LinkView(url: self.viewModel.getComicsItemUrl(self.selectedComicsItem!.resourceURI))
+                            LinkView(url: ApiConfig.charactersWebSearchUrl)
+                        }
+                    }
                 }
+
             } // vstack
             .padding(.horizontal)
         } // vstack
-        //.navigationBarTitle(Text(String(format: "%@", viewModel.chartys[0].name)), displayMode: .inline)
+        //.navigationBarTitle(Text(String(format: "%@", viewModel.charty.name)), displayMode: .inline)
         .edgesIgnoringSafeArea(.top) // the top image goes up
         .navigationBarBackButtonHidden(true) // will create a custom back button
         .navigationBarItems(leading:
@@ -118,6 +144,23 @@ struct ComicCellView: View {
             } //vstack
         } //hstack
         
+    }
+}
+
+struct EmptyComicsItemList: View {
+    
+    var type: String
+    
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Image(systemName: AppConfig.emptyListIcon)
+                .foregroundColor(.secondary)
+            Text(String(format:"There are not %@ for this Character", type))
+                .font(.system(.subheadline, design: .rounded))
+                .foregroundColor(.secondary)
+                .fontWeight(.bold)
+        }
+        .padding()
     }
 }
 
