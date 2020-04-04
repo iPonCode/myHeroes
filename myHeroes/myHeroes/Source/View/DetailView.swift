@@ -12,6 +12,8 @@ struct DetailView: View {
     @ObservedObject var viewModel: DetailViewModel
     @State private var selectedItemList = ItemListType.comics
     @Environment(\.presentationMode) var presentationMode
+    @State var showLink: Bool = false
+    @State var selectedComicsItem: ComicsItemDTO?
 
     let defaultDescription = "This character has an empty or nil description, this is a text to supply it…"
 
@@ -68,6 +70,19 @@ struct DetailView: View {
             VStack{
                 List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
                     ComicCellView(name: item.id, resourceURI: item.resourceURI)
+                        .onTapGesture {
+                            self.selectedComicsItem = item
+                            self.showLink = true
+                            print("link cell tapped: \(item.id) --> \(item.resourceURI)")
+                    }
+                } // list
+                // this modificator is for present Webview in modal view and the binded var is necessary to close it
+                .sheet(isPresented: self.$showLink){
+                    if self.selectedComicsItem != nil {
+                        
+                        //LinkView(url: self.viewModel.getComicsItemUrl(self.selectedComicsItem!.resourceURI))
+                        LinkView(url: ApiConfig.charactersWebSearchUrl)
+                    }
                 }
             } // vstack
             .padding(.horizontal)
