@@ -251,7 +251,7 @@ struct StandardCellView: View {
                 HStack {
                     Spacer().layoutPriority(-10) // push to the right
                     Text(String(format: "%@ comics | %@ events | %@ series",
-                                String(charty.comics.items.count),
+                                String(charty.comics.available),
                                 String(charty.events?.count ?? 0),
                                 String(charty.series?.count ?? 0)))
                         .font(.system(.caption, design: .rounded))

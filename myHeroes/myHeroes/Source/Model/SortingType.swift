@@ -12,7 +12,7 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
     case byName = 0
     case byId = 1
     case byAvailableComics = 2
-    case byComics = 3
+    case byAvailableEvents = 3
     case watched = 4
     case favourite = 5
     case featured = 6
@@ -27,7 +27,7 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         case 2:
             self = .byAvailableComics
         case 3:
-            self = .byComics
+            self = .byAvailableEvents
         case 4:
             self = .watched
         case 5:
@@ -48,8 +48,8 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
             return "Character ID"
         case .byAvailableComics:
             return "Comics (available)"
-        case .byComics:
-            return "Comics"
+        case .byAvailableEvents:
+            return "Events (available)"
         case .watched:
             return "Checked as Watched"
         case .favourite:
@@ -68,8 +68,8 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
                 return { descOrder ? ($0.id < $1.id) : ($0.id > $1.id) }
             case .byAvailableComics:
                 return { descOrder ? ($0.comics.available < $1.comics.available) : ($0.comics.available > $1.comics.available) }
-            case .byComics:
-                return { descOrder ? ($0.comics.items.count < $1.comics.items.count) : ($0.comics.items.count > $1.comics.items.count) }
+            case .byAvailableEvents:
+                return { descOrder ? ($0.events?.count ?? 0 < $1.events?.count ?? 0) : ($0.events?.count ?? 0 > $1.events?.count ?? 0) }
             case .watched:
                 return descOrder ? {$0.watched && !$1.watched} : {!$0.watched && $1.watched}
             case .favourite:
