@@ -9,11 +9,10 @@ import SwiftUI
 
 struct DetailView: View {
 
-    let detailsTitle = "Details"
-    let defaultName = "Nameless Character"
+//    let detailsTitle = "Details"
+//    let defaultName = "Nameless Character"
     let defaultDescription = """
-                             This character has an empty or nil description, this is a text to supply it…
-                             If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
+                             This character has an empty or nil description, this is a text to supply it. If you are going to use a passage of Lorem Ipsum…
                              """
 
     @ObservedObject var viewModel: DetailViewModel
@@ -28,18 +27,36 @@ struct DetailView: View {
 //        ScrollView(showsIndicators: true) {
             VStack {
                 VStack{
-                    ZStack(alignment: .bottom) {
-                        HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys.first?.thumbnail.path ?? "")), String((viewModel.chartys.first?.thumbnail.thumbnailExtension ?? "")))
-                        )
-                        Picker(selection: $selectedItemList, label: Text("Select an items list")){
-                            ForEach(ItemListType.allCases, id: \.self){ itemListType in
-                                Text(itemListType.description)
+                    ZStack{
+                        ZStack(alignment: .bottom) {
+                            HeaderImageWidget(url: String(format: "%@.%@", String((viewModel.chartys[0].thumbnail.path)), String((viewModel.chartys[0].thumbnail.thumbnailExtension)))
+                            )
+                            Picker(selection: $selectedItemList, label: Text("Select an items list")){
+                                ForEach(ItemListType.allCases, id: \.self){ itemListType in
+                                    Text(itemListType.description)
+                                }
                             }
+                            .padding(.horizontal)
+                            .background(Color.segmentedPickerBackground)
+                            .pickerStyle(SegmentedPickerStyle())
                         }
-                        .padding(.horizontal)
-                        .background(Color.secondary)
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
+                        VStack(alignment: .center, spacing: 1) {
+                            Spacer()
+                            HStack(alignment: .top, spacing: 5) {
+                                Spacer()
+                                Text(String(viewModel.chartys[0].id))
+                            }
+                            Text(viewModel.chartys[0].resultDescription.isEmpty ? defaultDescription : String(viewModel.chartys[0].resultDescription))
+                                .font(.system(.headline, design: .rounded))
+                                .fontWeight(.regular)
+                                .foregroundColor(.white)
+                                //.lineLimit(4)
+                        }
+                        .padding()
+                        .padding(.vertical, 50)
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(.white)
+                    } //zstack
                 }
                 VStack{
                     List(selectedItemList.selectedItemList(viewModel.chartys[0]), id: \.id) { item in
@@ -48,7 +65,8 @@ struct DetailView: View {
                 } // vstack
                 .padding(.horizontal)
             } // vstack
-            .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys.first?.id ?? 0, detailsTitle)), displayMode: .inline)
+            .navigationBarTitle(Text(String(format: "%@", viewModel.chartys[0].name)), displayMode: .inline)
+//            .navigationBarTitle(Text(String(format: "%d  %@", viewModel.chartys[0].id, detailsTitle)), displayMode: .inline)
 
 //        } // scrollview
     } // body
@@ -100,12 +118,12 @@ struct HeaderImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            //.frame(idealWidth: AppConfig.screenWidth, maxHeight: AppConfig.maxHeightHeaderImageWidget)
+            .frame(width: AppConfig.screenWidth)
             .overlay(
                 Rectangle()
-                    //.frame(idealWidth: AppConfig.screenWidth, maxHeight: AppConfig.maxHeightHeaderImageWidget)
+                    .frame(width: AppConfig.screenWidth)
                     .foregroundColor(.gray)
-                    .opacity(0.35)
+                    .opacity(0.45)
         )
     }
 }

@@ -27,4 +27,6 @@ extension Color {
 
     static let star = Color.yellow
     static let eye = Color.purple
+    
+    static let segmentedPickerBackground = Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.2))
 }

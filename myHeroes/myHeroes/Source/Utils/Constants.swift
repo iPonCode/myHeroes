@@ -43,7 +43,7 @@ struct AppConfig {
     static let screenHeight = screenSize.height
     static let widthBackgroundImageWidget = screenWidth - ((screenWidth * 8) / 100)
     static let maxHeightBackgroundImageWidget = screenHeight - ((screenHeight * 55) / 100)
-    static let maxHeightHeaderImageWidget = screenHeight - ((screenHeight * 75) / 100)
+    static let maxHeightHeaderImageWidget = screenHeight - ((screenHeight * 60) / 100)
 
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here
