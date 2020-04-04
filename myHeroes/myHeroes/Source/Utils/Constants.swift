@@ -36,6 +36,7 @@ struct AppConfig {
     static let cellFav = "star.fill"
     static let cellWatched = "eye.fill"
     static let cellLink = "link.circle"
+    static let emptyListIcon = "info.circle"
     
     // Screen size
     static let screenSize: CGRect = UIScreen.main.bounds

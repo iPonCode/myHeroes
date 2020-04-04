@@ -10,7 +10,7 @@ import Combine
 
 class DetailViewModel: ObservableObject {
         
-    @Published var chartys : [CharacterDTO] = []
+    @Published var charty = CharacterDTO()
 
     init(_ id: Int) {
         
@@ -22,8 +22,8 @@ class DetailViewModel: ObservableObject {
             
             let networkResponse = try! JSONDecoder().decode(NetworkDetailResponseDTO.self, from: data)
             DispatchQueue.main.async {
-                if let character = networkResponse.data?.results{
-                     self.chartys = character
+                if let character = networkResponse.data?.results.first{
+                     self.charty = character
                 }
             }
         }.resume()
