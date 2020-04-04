@@ -68,9 +68,14 @@ public struct ComicsDTO: Codable {
     let returned: Int
 }
 
-public struct ComicsItemDTO: Codable {
+public struct ComicsItemDTO: Codable, Identifiable {
     let resourceURI: String
-    let name: String
+    public let id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case resourceURI
+        case id = "name"
+    }
 }
 
 

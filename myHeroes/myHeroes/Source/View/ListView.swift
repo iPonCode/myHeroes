@@ -10,26 +10,25 @@ import SwiftUI
 struct ListView: View {
     
     @State var showOptions: Bool = false
-    
     @EnvironmentObject var options: OptionsFactory
-    
     @ObservedObject var viewModel = ListViewModel()
     
-    let listTitle = "Personajes Marvel"
+    let listTitle = "Marvel Characters"
     
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
     init() {
-        
-        // fonts for navigationbar titles
+
         let appearance = UINavigationBarAppearance()
+
+        // fonts for navigationbar titles
         appearance.largeTitleTextAttributes = [
             .font: UIFont.AppFont.largeTitle,
             .foregroundColor: UIColor.barTitles]
         appearance.titleTextAttributes = [
             .font: UIFont.AppFont.compactTitle,
             .foregroundColor: UIColor.barTitles]
-        
+
         // back button
         appearance.setBackIndicatorImage(
             UIImage(systemName: AppConfig.barBack), transitionMaskImage:
@@ -37,29 +36,27 @@ struct ListView: View {
         appearance.backButtonAppearance.normal.titleTextAttributes = [
             .font: UIFont.AppFont.barButton,
             .foregroundColor: UIColor.barButton]
-        //appearance.configureWithTransparentBackground()
-        
-        // assign appearance
+
+        // transparency
+        appearance.configureWithTransparentBackground()
+
+        // apply appearance
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
-    func dumpy(_ charty:CharacterListItemDTO){
-        dump(charty)
-    }
+
     var body: some View {
-        
         NavigationView{
             
             List{
-//                ForEach(viewModel.chars/*, id: \.id*/) { charty in
                 ForEach(viewModel.chars
                     .filter(shouldShowItem)
                     .sorted(by: self.options.selectedSorting.sortingPredicate(
                         descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
-//                    //.sorted(by: self.options.selectedSorting.sortingPredicate())){ charty in
-//                    // Important to filter and sorted in the same way
-//                    // before remove with an index (.onDelete indexSet)
+                    // Important to filter and sorteing in the same way
+                    // before remove with an index or an indexSet (.onDelete)
+
                     ZStack {
                         VStack {
                             if charty.featured {
@@ -104,22 +101,22 @@ struct ListView: View {
                                     }
                                 })
                         }
-                        //.onTapGesture { // now using NavigationLink
-                            //self.dumpy(charty)
-                        //}
                         // this is the only way (right now) to remove or do not show the
                         // disclouser indicator in the row, first renders the content and
                         // after this render over an empty view, needed a ZStack to do this
                         NavigationLink(destination: DetailView(id: charty.id)) {
                             EmptyView()
-                        }//navigation link
-                    }//zstack
-                }// need a ForEach instead directly a List to implement onDelete
+                        } //navigation link
+                        
+                    } //zstack
+                            
+                } // need a ForEach instead directly a List to implement onDelete
                 .onDelete(perform: { (indexSet) in
                     // with onDelete, can delete a Set of items
                     self.removeItem(itemsSet: indexSet)
                 })
-            }//list
+                
+            } //list
             // the navigation modificators goes in the close bracket of the last component inside the NavigationView
             .navigationBarTitle(Text(listTitle))
             .navigationBarItems(trailing:
@@ -132,8 +129,9 @@ struct ListView: View {
             .sheet(isPresented: $showOptions){
                 OptionsView().environmentObject(self.options) // dependency injection
             }
-        }//navigation view
-    }//body
+
+        } //navigation view
+    } //body
     
     enum ToggleType {
         case watched
@@ -157,25 +155,18 @@ struct ListView: View {
         self.viewModel.chars.removeAll(where: { charty in
             charty.id == item.id
         })
-//        if let index = self.viewModel.chars.firstIndex(where: {$0.id == item.id}){
-//            self.viewModel.chars.remove(at: index)
-//        }
     }
 
     func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
         
         // When using an index need to filter and sort array previously
         // >> exactly in the same way that are displayed <<
-        var itemsWithCurrentFilters = viewModel.chars // TODO: review filters and sorting
+        var itemsWithCurrentFilters = viewModel.chars
             .filter(shouldShowItem)
             .sorted(by: self.options.selectedSorting.sortingPredicate(
                 descOrder: self.options.selectedSortingOption.boolMe()))
         
-//        itemsSet.forEach { index in
-//            itemsWithCurrentFilters.remove(at: index)
-//        }
         itemsWithCurrentFilters.remove(atOffsets: itemsSet)
-
         viewModel.chars = itemsWithCurrentFilters
     }
 
@@ -248,7 +239,7 @@ struct StandardCellView: View {
                                     .foregroundColor(.eye)
                                 .padding(.bottom, 4)
                             }
-                        }//hstack
+                        } //hstack
                         
                     } //vstack
                     .foregroundColor(.secondary)
@@ -256,7 +247,7 @@ struct StandardCellView: View {
                 } //hstack
                 HStack {
                     Spacer().layoutPriority(-10) // push to the right
-                    Text(String(format: "%@ comics | %@ eventos | %@ series",
+                    Text(String(format: "%@ comics | %@ events | %@ series",
                                 String(charty.comics.items.count),
                                 String(charty.events?.count ?? 0),
                                 String(charty.series?.count ?? 0)))
@@ -284,11 +275,11 @@ struct BackgroundImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 350, height: 350)
-            .cornerRadius(15)
+            .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
+            .cornerRadius(35)
             .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .frame(width: 350, height: 350)
+                RoundedRectangle(cornerRadius: 35)
+                    .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
                     .foregroundColor(.gray)
                     .opacity(0.55)
         )
@@ -325,14 +316,14 @@ struct FeaturedCellView: View {
                             if charty.watched { Image(systemName: AppConfig.cellWatched) }
                         }
                         Text(String(charty.id))
-                        Text(String(format: "%@ comics | %@ eventos | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
+                        Text(String(format: "%@ comics | %@ events | %@ series", String(charty.comics.items.count), String(charty.events?.count ?? 0), String(charty.series?.count ?? 0)))
                     }
                 }
                 .font(.system(.headline, design: .rounded))
                 .foregroundColor(.white)
-            }//vstack
+            } //vstack
         .padding()
-        }//zstack
+        } //zstack
     }
 }
 

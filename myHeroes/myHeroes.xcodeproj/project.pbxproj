@@ -27,6 +27,7 @@
 		D081E9402434EF92002B6D13 /* CharactersDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081E93F2434EF92002B6D13 /* CharactersDTOs.swift */; };
 		D0C1D3712435FBE9008E8CED /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1D3702435FBE9008E8CED /* ImageLoader.swift */; };
 		D0C1D3732436BA0F008E8CED /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1D3722436BA0F008E8CED /* DetailViewModel.swift */; };
+		D0D4E9DF2437844000005E68 /* ItemListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D4E9DE2437844000005E68 /* ItemListType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		D081E93F2434EF92002B6D13 /* CharactersDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersDTOs.swift; sourceTree = "<group>"; };
 		D0C1D3702435FBE9008E8CED /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D0C1D3722436BA0F008E8CED /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		D0D4E9DE2437844000005E68 /* ItemListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				D037D374242D9AC60062A012 /* SortingType.swift */,
 				D037D376242DB8010062A012 /* OptionsFactory.swift */,
 				D081E93F2434EF92002B6D13 /* CharactersDTOs.swift */,
+				D0D4E9DE2437844000005E68 /* ItemListType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				D07CC93A242ABC6800EDB5A5 /* AppDelegate.swift in Sources */,
 				D081E93E2434EEED002B6D13 /* String+md5.swift in Sources */,
 				D037D367242AFC760062A012 /* Colors.swift in Sources */,
+				D0D4E9DF2437844000005E68 /* ItemListType.swift in Sources */,
 				D037D371242BAEAD0062A012 /* OptionsView.swift in Sources */,
 				D037D373242D412C0062A012 /* Constants.swift in Sources */,
 				D0783FC22433EDD50043B426 /* ListViewModel.swift in Sources */,
