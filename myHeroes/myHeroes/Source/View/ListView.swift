@@ -131,6 +131,9 @@ struct ListView: View {
             }
 
         } //navigation view
+        // to remove the cell separators
+        .onAppear { UITableView.appearance().separatorStyle = .none }
+        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
     } //body
     
     enum ToggleType {
@@ -203,7 +206,7 @@ struct CircleImageWidget: View {
 struct StandardCellView: View {
     
     var charty: CharacterListItemDTO
-    let defaultDescription = "No description, this is a text to supply it"
+    let defaultDescription = "No description, this is a text to supply it…"
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -248,7 +251,7 @@ struct StandardCellView: View {
                 HStack {
                     Spacer().layoutPriority(-10) // push to the right
                     Text(String(format: "%@ comics | %@ events | %@ series",
-                                String(charty.comics.items.count),
+                                String(charty.comics.available),
                                 String(charty.events?.count ?? 0),
                                 String(charty.series?.count ?? 0)))
                         .font(.system(.caption, design: .rounded))
@@ -289,7 +292,7 @@ struct BackgroundImageWidget: View {
 struct FeaturedCellView: View {
     
     var charty: CharacterListItemDTO
-    let defaultDescription = "This character has an empty or nil description, this is a text to supply it"
+    let defaultDescription = "This character has an empty or nil description, this is a text to supply it…"
 
     var body: some View {
         ZStack {
