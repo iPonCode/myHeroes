@@ -78,11 +78,11 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
             case .byAvailableSeries:
                 return { descOrder ? ($0.series?.count ?? 0 < $1.series?.count ?? 0) : ($0.series?.count ?? 0 > $1.series?.count ?? 0) }
             case .watched:
-                return descOrder ? {$0.watched && !$1.watched} : {!$0.watched && $1.watched}
+                return { descOrder ? $0.watched && !$1.watched : !$0.watched && $1.watched }
             case .favourite:
-                return descOrder ? {$0.favourite && !$1.favourite} : {!$0.favourite && $1.favourite}
+                return { descOrder ? $0.favourite && !$1.favourite : !$0.favourite && $1.favourite }
             case .featured:
-                return descOrder ? {$0.featured && !$1.featured} : {!$0.featured && $1.featured}
+                return { descOrder ? $0.featured && !$1.featured : !$0.featured && $1.featured }
         }
     }
     
