@@ -49,87 +49,91 @@ struct ListView: View {
     var body: some View {
         NavigationView{
             
-            List{
-                ForEach(viewModel.chars
-                    .filter(shouldShowItem)
-                    .sorted(by: self.options.selectedSorting.sortingPredicate(
-                        descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
-                    // Important to filter and sorteing in the same way
-                    // before remove with an index or an indexSet (.onDelete)
+            if viewModel.chars.isEmpty {
+                EmptyCharactersList(error: viewModel.serverError)
+                Spacer()
+            } else {
+                List{
+                    ForEach(viewModel.chars
+                        .filter(shouldShowItem)
+                        .sorted(by: self.options.selectedSorting.sortingPredicate(
+                            descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
+                        // Important to filter and sorteing in the same way
+                        // before remove with an index or an indexSet (.onDelete)
 
-                    ZStack {
-                        VStack {
-                            if charty.featured {
-                                FeaturedCellView(charty: charty)
-                            } else {
-                                StandardCellView(charty: charty)
+                        ZStack {
+                            VStack {
+                                if charty.featured {
+                                    FeaturedCellView(charty: charty)
+                                } else {
+                                    StandardCellView(charty: charty)
+                                }
                             }
-                        }
-                        .contextMenu {
-                                Button(action: { // feature
-                                    self.toggle(charty, type: .featured)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.featured ? "No destacar" : "Destacar")
-                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-                                    }
-                                })
+                            .contextMenu {
+                                    Button(action: { // feature
+                                        self.toggle(charty, type: .featured)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.featured ? "No destacar" : "Destacar")
+                                            Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                        }
+                                    })
 
-                                Button(action: { // watched
-                                    self.toggle(charty, type: .watched)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.watched ? "Marcar como no visto" : "Visto")
-                                        Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-                                    }
-                                })
-                                Button(action: { // favourite
-                                    self.toggle(charty, type: .favourite)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.favourite ? "Quitar favorito" : "Favorito")
-                                        Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                    }
-                                })
+                                    Button(action: { // watched
+                                        self.toggle(charty, type: .watched)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.watched ? "Marcar como no visto" : "Visto")
+                                            Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+                                        }
+                                    })
+                                    Button(action: { // favourite
+                                        self.toggle(charty, type: .favourite)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.favourite ? "Quitar favorito" : "Favorito")
+                                            Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+                                        }
+                                    })
 
-                                Button(action: { // remove
-                                    self.removeItem(item: charty)
-                                }, label: {
-                                    HStack{
-                                        Text("Eliminar")
-                                        Image(systemName: AppConfig.menuRemove)
-                                    }
-                                })
-                        }
-                        // this is the only way (right now) to remove or do not show the
-                        // disclouser indicator in the row, first renders the content and
-                        // after this render over an empty view, needed a ZStack to do this
-                        NavigationLink(destination: DetailView(id: charty.id)) {
-                            EmptyView()
-                        } //navigation link
-                        
-                    } //zstack
+                                    Button(action: { // remove
+                                        self.removeItem(item: charty)
+                                    }, label: {
+                                        HStack{
+                                            Text("Eliminar")
+                                            Image(systemName: AppConfig.menuRemove)
+                                        }
+                                    })
+                            }
+                            // this is the only way (right now) to remove or do not show the
+                            // disclouser indicator in the row, first renders the content and
+                            // after this render over an empty view, needed a ZStack to do this
+                            NavigationLink(destination: DetailView(id: charty.id)) {
+                                EmptyView()
+                            } //navigation link
                             
-                } // need a ForEach instead directly a List to implement onDelete
-                .onDelete(perform: { (indexSet) in
-                    // with onDelete, can delete a Set of items
-                    self.removeItem(itemsSet: indexSet)
+                        } //zstack
+                                
+                    } // need a ForEach instead directly a List to implement onDelete
+                    .onDelete(perform: { (indexSet) in
+                        // with onDelete, can delete a Set of items
+                        self.removeItem(itemsSet: indexSet)
+                    })
+                    
+                } //list
+                // the navigation modificators goes in the close bracket of the last component inside the NavigationView
+                .navigationBarTitle(Text(listTitle))
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.showOptions = true
+                    }, label: {
+                        Image(systemName: AppConfig.barShowOptions).font(.title)
                 })
-                
-            } //list
-            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
-            .navigationBarTitle(Text(listTitle))
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.showOptions = true
-                }, label: {
-                    Image(systemName: AppConfig.barShowOptions).font(.title)
-            })
-            )// this modificator is for present Options in modal view and the binded var is necessary to close it
-            .sheet(isPresented: $showOptions){
-                OptionsView().environmentObject(self.options) // dependency injection
-            }
-
+                )// this modificator is for present Options in modal view and the binded var is necessary to close it
+                .sheet(isPresented: $showOptions){
+                    OptionsView().environmentObject(self.options) // dependency injection
+                }
+            } //if-else (empty list)
         } //navigation view
         // to remove the cell separators
         .onAppear { UITableView.appearance().separatorStyle = .none }
@@ -327,6 +331,29 @@ struct FeaturedCellView: View {
             } //vstack
         .padding()
         } //zstack
+    }
+}
+
+struct EmptyCharactersList: View {
+    
+    var error: ErrorResponse
+    
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Image(systemName: AppConfig.emptyListIcon)
+                .foregroundColor(.secondary)
+            VStack {
+                Text(String("The Character list are empty"))
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundColor(.primary)
+                    .fontWeight(.bold)
+                Text(String(format:"%@%@", error.message, error.code))
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .fontWeight(.bold)
+            }
+        }
+        .padding()
     }
 }
 
