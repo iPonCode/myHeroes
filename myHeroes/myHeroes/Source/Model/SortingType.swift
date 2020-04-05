@@ -68,15 +68,15 @@ enum SortingType: Int, CaseIterable { // Needs to iterate over allcases using a 
         
         switch self {
             case .byName:
-                return { descOrder ? ($0.name ?? "" < $1.name ?? "") : ($0.name ?? "" > $1.name ?? "") }
+                return { descOrder ? ($0.name ?? "" > $1.name ?? "") : ($0.name ?? "" < $1.name ?? "") }
             case .byId:
-                return { descOrder ? ($0.id < $1.id) : ($0.id > $1.id) }
+                return { descOrder ? ($0.id > $1.id) : ($0.id > $1.id) }
             case .byAvailableComics:
-                return { descOrder ? ($0.comics.available < $1.comics.available) : ($0.comics.available > $1.comics.available) }
+                return { descOrder ? ($0.comics.available > $1.comics.available) : ($0.comics.available < $1.comics.available) }
             case .byAvailableEvents:
-                return { descOrder ? ($0.events?.count ?? 0 < $1.events?.count ?? 0) : ($0.events?.count ?? 0 > $1.events?.count ?? 0) }
+                return { descOrder ? ($0.events?.count ?? 0 > $1.events?.count ?? 0) : ($0.events?.count ?? 0 < $1.events?.count ?? 0) }
             case .byAvailableSeries:
-                return { descOrder ? ($0.series?.count ?? 0 < $1.series?.count ?? 0) : ($0.series?.count ?? 0 > $1.series?.count ?? 0) }
+                return { descOrder ? ($0.series?.count ?? 0 > $1.series?.count ?? 0) : ($0.series?.count ?? 0 < $1.series?.count ?? 0) }
             case .watched:
                 return { descOrder ? $0.watched && !$1.watched : !$0.watched && $1.watched }
             case .favourite:
