@@ -70,11 +70,11 @@ struct DetailView: View {
                     .pickerStyle(SegmentedPickerStyle())
 
                 } //zstack
-
             }
             VStack{
                 if self.selectedItemList.selectedItemList(self.viewModel.charty).isEmpty {
                     EmptyComicsItemList(type: selectedItemList.description)
+                    Spacer()
                 } else {
                     List(selectedItemList.selectedItemList(viewModel.charty), id: \.id) { item in
                         VStack {
@@ -82,8 +82,7 @@ struct DetailView: View {
                         }
                         .onTapGesture {
                             self.selectedComicsItem = item
-                            self.showLink = true
-                            print("link cell tapped: \(item.id) --> \(item.resourceURI)")
+                            self.showLink = true // this will triger the modal sheet
                         }
                     } // list
                     // this modificator is for present Webview in modal view and the binded var is necessary to close it
@@ -94,9 +93,9 @@ struct DetailView: View {
                         }
                     }
                 }
-
             } // vstack
             .padding(.horizontal)
+            
         } // vstack
         //.navigationBarTitle(Text(String(format: "%@", viewModel.charty.name)), displayMode: .inline)
         .edgesIgnoringSafeArea(.top) // the top image goes up
@@ -177,10 +176,12 @@ struct HeaderImageWidget: View {
         Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: AppConfig.screenWidth)
+            .frame(width: AppConfig.screenWidth, height: AppConfig.maxHeightHeaderImageWidget)
+//            .frame(width: AppConfig.screenWidth)
             .overlay(
                 Rectangle()
-                    .frame(width: AppConfig.screenWidth)
+                    .frame(width: AppConfig.screenWidth, height: AppConfig.maxHeightHeaderImageWidget)
+//                    .frame(width: AppConfig.screenWidth)
                     .foregroundColor(.gray)
                     .opacity(0.45)
         )
