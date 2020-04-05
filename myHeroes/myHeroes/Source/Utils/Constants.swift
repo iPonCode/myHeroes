@@ -46,8 +46,9 @@ struct AppConfig {
     static let maxHeightBackgroundImageWidget = screenHeight - ((screenHeight * 55) / 100)
     static let maxHeightHeaderImageWidget = screenHeight - ((screenHeight * 30) / 100)
     
-    // Animation
+    // Cell Transition and gesture
     static let animationSpeedFactor: Double = 0.85
+    static let minLongPressDuration: Double = 0.9
 
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here

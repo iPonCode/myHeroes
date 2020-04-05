@@ -103,6 +103,11 @@ struct ListView: View {
                                     }
                                 })
                         }
+                        .onLongPressGesture(minimumDuration: AppConfig.minLongPressDuration) {
+                            withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
+                                self.toggle(charty, type: .featured)
+                            }
+                        }
                         // this is the only way (right now) to remove or do not show the
                         // disclouser indicator in the row, first renders the content and
                         // after this render over an empty view, needed a ZStack to do this
