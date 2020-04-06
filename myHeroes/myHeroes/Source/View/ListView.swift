@@ -60,14 +60,16 @@ struct ListView: View {
                     ZStack {
                         VStack {
                             if charty.featured {
-                                FeaturedCellView(charty: charty)
+                                FeaturedCellView(charty: charty).transition(.featuredCell)
                             } else {
-                                StandardCellView(charty: charty)
+                                StandardCellView(charty: charty).transition(.standardCell)
                             }
                         }
                         .contextMenu {
                                 Button(action: { // feature
-                                    self.toggle(charty, type: .featured)
+                                    withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
+                                        self.toggle(charty, type: .featured)
+                                    }
                                 }, label: {
                                     HStack{
                                         Text(charty.featured ? "No destacar" : "Destacar")
