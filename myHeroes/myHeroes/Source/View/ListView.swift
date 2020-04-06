@@ -49,10 +49,11 @@ struct ListView: View {
     var body: some View {
         NavigationView{
             
-            if viewModel.chars.isEmpty {
-                EmptyCharactersList(error: viewModel.serverError)
+            if viewModel.chars.isEmpty { // while list is loading this view will be displayed
+                EmptyCharactersList(error: viewModel.serverError) // if webservice fail, also shows the error
                 Spacer()
-            } else {
+                
+            } else { // once have data it has been displayed with its corresponding filters and sorting order applied
                 List{
                     ForEach(viewModel.chars
                         .filter(shouldShowItem)
@@ -339,11 +340,12 @@ struct EmptyCharactersList: View {
     var error: ErrorResponse
     
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
             Image(systemName: AppConfig.emptyListIcon)
+                .font(.system(size: 36, weight: .semibold))
                 .foregroundColor(.secondary)
             VStack {
-                Text(String("The Character list are empty"))
+                Text(String("Loading list…"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.primary)
                     .fontWeight(.bold)
