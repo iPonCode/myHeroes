@@ -49,89 +49,94 @@ struct ListView: View {
     var body: some View {
         NavigationView{
             
-            List{
-                ForEach(viewModel.chars
-                    .filter(shouldShowItem)
-                    .sorted(by: self.options.selectedSorting.sortingPredicate(
-                        descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
-                    // Important to filter and sorteing in the same way
-                    // before remove with an index or an indexSet (.onDelete)
-
-                    ZStack {
-                        VStack {
-                            if charty.featured {
-                                FeaturedCellView(charty: charty).transition(.featuredCell)
-                            } else {
-                                StandardCellView(charty: charty).transition(.standardCell)
-                            }
-                        }
-                        .contextMenu {
-                                Button(action: { // feature
-                                    withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
-                                        self.toggle(charty, type: .featured)
-                                    }
-                                }, label: {
-                                    HStack{
-                                        Text(charty.featured ? "No destacar" : "Destacar")
-                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-                                    }
-                                })
-
-                                Button(action: { // watched
-                                    self.toggle(charty, type: .watched)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.watched ? "Marcar como no visto" : "Visto")
-                                        Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-                                    }
-                                })
-                                Button(action: { // favourite
-                                    self.toggle(charty, type: .favourite)
-                                }, label: {
-                                    HStack{
-                                        Text(charty.favourite ? "Quitar favorito" : "Favorito")
-                                        Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                    }
-                                })
-
-                                Button(action: { // remove
-                                    self.removeItem(item: charty)
-                                }, label: {
-                                    HStack{
-                                        Text("Eliminar")
-                                        Image(systemName: AppConfig.menuRemove)
-                                    }
-                                })
-                        }
-                        // this is the only way (right now) to remove or do not show the
-                        // disclouser indicator in the row, first renders the content and
-                        // after this render over an empty view, needed a ZStack to do this
-                        NavigationLink(destination: DetailView(id: charty.id)) {
-                            EmptyView()
-                        } //navigation link
-                        
-                    } //zstack
-                            
-                } // need a ForEach instead directly a List to implement onDelete
-                .onDelete(perform: { (indexSet) in
-                    // with onDelete, can delete a Set of items
-                    self.removeItem(itemsSet: indexSet)
-                })
+            if viewModel.chars.isEmpty { // while list is loading this view will be displayed
+                EmptyCharactersList(error: viewModel.serverError) // if webservice fail, also shows the error
+                Spacer()
                 
-            } //list
-            // the navigation modificators goes in the close bracket of the last component inside the NavigationView
-            .navigationBarTitle(Text(listTitle))
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.showOptions = true
-                }, label: {
-                    Image(systemName: AppConfig.barShowOptions).font(.title)
-            })
-            )// this modificator is for present Options in modal view and the binded var is necessary to close it
-            .sheet(isPresented: $showOptions){
-                OptionsView().environmentObject(self.options) // dependency injection
-            }
+            } else { // once have data it has been displayed with its corresponding filters and sorting order applied
+                List{
+                    ForEach(viewModel.chars
+                        .filter(shouldShowItem)
+                        .sorted(by: self.options.selectedSorting.sortingPredicate(
+                            descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
+                        // Important to filter and sorteing in the same way
+                        // before remove with an index or an indexSet (.onDelete)
 
+                        ZStack {
+                            VStack {
+                                if charty.featured {
+                                    FeaturedCellView(charty: charty).transition(.featuredCell)
+                                } else {
+                                    StandardCellView(charty: charty).transition(.standardCell)
+                                }
+                            }
+                            .contextMenu {
+                                    Button(action: { // feature
+                                        withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
+                                            self.toggle(charty, type: .featured)
+                                        }
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.featured ? "No destacar" : "Destacar")
+                                            Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                        }
+                                    })
+
+                                    Button(action: { // watched
+                                        self.toggle(charty, type: .watched)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.watched ? "Marcar como no visto" : "Visto")
+                                            Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+                                        }
+                                    })
+                                    Button(action: { // favourite
+                                        self.toggle(charty, type: .favourite)
+                                    }, label: {
+                                        HStack{
+                                            Text(charty.favourite ? "Quitar favorito" : "Favorito")
+                                            Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+                                        }
+                                    })
+
+                                    Button(action: { // remove
+                                        self.removeItem(item: charty)
+                                    }, label: {
+                                        HStack{
+                                            Text("Eliminar")
+                                            Image(systemName: AppConfig.menuRemove)
+                                        }
+                                    })
+                            }
+                            // this is the only way (right now) to remove or do not show the
+                            // disclouser indicator in the row, first renders the content and
+                            // after this render over an empty view, needed a ZStack to do this
+                            NavigationLink(destination: DetailView(id: charty.id)) {
+                                EmptyView()
+                            } //navigation link
+                            
+                        } //zstack
+                                
+                    } // need a ForEach instead directly a List to implement onDelete
+                    .onDelete(perform: { (indexSet) in
+                        // with onDelete, can delete a Set of items
+                        self.removeItem(itemsSet: indexSet)
+                    })
+                    
+                } //list
+                // the navigation modificators goes in the close bracket of the last component inside the NavigationView
+                .navigationBarTitle(Text(listTitle))
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.showOptions = true
+                    }, label: {
+                        Image(systemName: AppConfig.barShowOptions).font(.title)
+                })
+                )// this modificator is for present Options in modal view and the binded var is necessary to close it
+                .sheet(isPresented: $showOptions){
+                    OptionsView().environmentObject(self.options) // dependency injection
+                }
+            } //if-else (empty list)
         } //navigation view
         // to remove the cell separators
         .onAppear { UITableView.appearance().separatorStyle = .none }
@@ -329,6 +334,30 @@ struct FeaturedCellView: View {
             } //vstack
         .padding()
         } //zstack
+    }
+}
+
+struct EmptyCharactersList: View {
+    
+    var error: ErrorResponse
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 8) {
+            Image(systemName: AppConfig.emptyListIcon)
+                .font(.system(size: 36, weight: .semibold))
+                .foregroundColor(.secondary)
+            VStack {
+                Text(String("Loading list…"))
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundColor(.primary)
+                    .fontWeight(.bold)
+                Text(String(format:"%@%@", error.message, error.code))
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .fontWeight(.bold)
+            }
+        }
+        .padding()
     }
 }
 
