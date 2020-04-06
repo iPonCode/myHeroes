@@ -342,7 +342,7 @@ struct EmptyCharactersList: View {
     var error: ErrorResponse
     
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .center, spacing: 4) {
             Image(systemName: AppConfig.emptyListIcon)
                 .font(.system(size: 36, weight: .semibold))
                 .foregroundColor(.secondary)
@@ -350,8 +350,13 @@ struct EmptyCharactersList: View {
                 Text(String("Loading list…"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.primary)
-                    .fontWeight(.bold)
-                Text(String(format:"%@%@", error.message, error.code))
+                    .fontWeight(.heavy)
+                    .padding(.vertical)
+                Text(String(format:"%@", error.code))
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .fontWeight(.semibold)
+                Text(String(format:"%@", error.message))
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.secondary)
                     .fontWeight(.bold)
