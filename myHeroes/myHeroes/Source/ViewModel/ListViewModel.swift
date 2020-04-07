@@ -15,7 +15,10 @@ class ListViewModel: ObservableObject {
     @Published var serverError = ErrorResponse()
 
     init() {
-        
+        getCharacterList()
+    }
+    
+    private func getCharacterList() {
         guard let url = URL(string: getCharactersListUrl()) else { return }
         
         AF.request(url).responseJSON { response in

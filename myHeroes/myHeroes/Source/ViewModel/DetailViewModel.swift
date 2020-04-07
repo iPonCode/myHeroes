@@ -13,6 +13,10 @@ class DetailViewModel: ObservableObject {
     @Published var charty = CharacterDTO()
 
     init(_ id: Int) {
+        getDetails(id)
+    }
+    
+    private func getDetails(_ id: Int) {
         
         guard let url = URL(string: getDetailsUrl(id)) else { return }
         
@@ -54,4 +58,5 @@ class DetailViewModel: ObservableObject {
                                   ApiConfig.publicKey).md5()
         return resourceURI + "?ts=" + ts + "&apikey=" + ApiConfig.publicKey + "&hash=" + hashChecksum
     }
+    
 }
