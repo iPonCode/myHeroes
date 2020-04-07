@@ -52,7 +52,6 @@ struct DetailView: View {
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.trailing)
-                                    //.lineLimit(4)
                             }
                         }
                     }
@@ -85,13 +84,6 @@ struct DetailView: View {
                             self.showLink = true // this will triger the modal sheet
                         }
                     } // list
-                    // this modificator is for present Webview in modal view and the binded var is necessary to close it
-//                    .sheet(isPresented: self.$showLink){ // commented to 1.0.0
-//                        if self.selectedComicsItem != nil {
-//                            //LinkView(url: self.viewModel.getComicsItemUrl(self.selectedComicsItem!.resourceURI))
-//                            LinkView(url: ApiConfig.charactersWebSearchUrl)
-//                        }
-//                    }
                 }
             } // vstack
             .padding(.horizontal)

@@ -51,22 +51,8 @@ class ListViewModel: ObservableObject {
                     //dump(networkResponse)
                 }
             }
-
         }
         
-/*
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
-            
-            guard let data = data else { return }
-            
-            let networkResponse = try! JSONDecoder().decode(NetworkListResponseDTO.self, from: data)
-            DispatchQueue.main.async {
-                if let characters = networkResponse.data?.results{
-                     self.chars = characters
-                }
-            }
-        }.resume()
-*/
     }
     
     private func getCharactersListUrl() -> String {
