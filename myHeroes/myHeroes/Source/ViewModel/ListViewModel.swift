@@ -19,7 +19,8 @@ class ListViewModel: ObservableObject {
     }
     
     private func getCharacterList() {
-        guard let url = URL(string: getCharactersListUrl()) else { return }
+        
+        guard let url = URL(string: ApiConfig.getCharactersListUrl()) else { return }
         
         AF.request(url).responseJSON { response in
         
@@ -49,14 +50,4 @@ class ListViewModel: ObservableObject {
         
     }
     
-    private func getCharactersListUrl() -> String {
-        
-        let timeStamp = Date().timeIntervalSince1970
-        let ts = String(format:"%.f", timeStamp)
-        let hashChecksum = String(format: "%.f%@%@",
-                                  timeStamp,
-                                  ApiConfig.privateKey,
-                                  ApiConfig.publicKey).md5()
-        return ApiConfig.baseUrl + "?ts=" + ts + "&apikey=" + ApiConfig.publicKey + "&hash=" + hashChecksum
-    }
 }

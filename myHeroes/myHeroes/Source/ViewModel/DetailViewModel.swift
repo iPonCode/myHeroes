@@ -18,7 +18,7 @@ class DetailViewModel: ObservableObject {
     
     private func getDetails(_ id: Int) {
         
-        guard let url = URL(string: getDetailsUrl(id)) else { return }
+        guard let url = URL(string: ApiConfig.getDetailsUrl(id)) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             
@@ -33,30 +33,5 @@ class DetailViewModel: ObservableObject {
         }.resume()
         
     }
-    
-    private func getDetailsUrl(_ id: Int) -> String {
-        
-        let timeStamp = Date().timeIntervalSince1970
-        let ts = String(format:"%.f", timeStamp)
-        let hashChecksum = String(format: "%.f%@%@",
-                                  timeStamp,
-                                  ApiConfig.privateKey,
-                                  ApiConfig.publicKey)
-            .md5()
 
-        return ApiConfig.baseUrl + "/" + String(id) + "?ts=" + ts + "&apikey=" +
-               ApiConfig.publicKey + "&hash=" + hashChecksum
-    }
-
-    private func getComicsItemUrl(_ resourceURI: String) -> String {
-        
-        let timeStamp = Date().timeIntervalSince1970
-        let ts = String(format:"%.f", timeStamp)
-        let hashChecksum = String(format: "%.f%@%@",
-                                  timeStamp,
-                                  ApiConfig.privateKey,
-                                  ApiConfig.publicKey).md5()
-        return resourceURI + "?ts=" + ts + "&apikey=" + ApiConfig.publicKey + "&hash=" + hashChecksum
-    }
-    
 }
