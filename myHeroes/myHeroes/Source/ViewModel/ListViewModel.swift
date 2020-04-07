@@ -30,25 +30,19 @@ class ListViewModel: ObservableObject {
                     // Cannot decode the current error message, show generic error when don't know what error it is
                     self.serverError.code = "Generic"
                     self.serverError.message = "Generic server error - Cannot decode error message"
-                    //debugPrint("Generic server error - Cannot decode error message")
+
                     return
                 }
         
                 // Show any other error to user
                 self.serverError = errorObject
-                //debugPrint("Server error - dumping error response:")
-                //dump(errorObject)
+
                 return
             }
             
             DispatchQueue.main.async {
                 if let characters = networkResponse.data?.results{
                     self.chars = characters
-                    //debugPrint("All ok, have characters, dumping:")
-                    //dump(characters)
-                } else {
-                    //debugPrint("Dumping networkResponse:")
-                    //dump(networkResponse)
                 }
             }
         }

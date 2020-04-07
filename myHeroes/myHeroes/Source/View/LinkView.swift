@@ -15,7 +15,7 @@ struct LinkView: UIViewRepresentable {
     var url: String
     
     func makeUIView(context: Context) -> WKWebView {
-        print(url)
+
         guard let url = URL(string: self.url) else {
             return WKWebView()
         }

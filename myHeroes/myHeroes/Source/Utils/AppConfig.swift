@@ -13,8 +13,6 @@ import UIKit
 // MARK: - App Configuration
 
 struct AppConfig {
-
-    // TODO: File names
     
     // Bar buttons
     static let barBack = "rectangle.grid.1x2.fill"
