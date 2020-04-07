@@ -69,7 +69,4 @@ struct ApiConfig {
     // TODO: Declare headers for webservice here if needed
 
     private init() {}
-    
 }
-
-

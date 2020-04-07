@@ -148,4 +148,3 @@ public struct URLElementDTO: Codable {
     let type: String
     let url: String
 }
-

@@ -201,7 +201,7 @@ struct CircleImageWidget: View {
     }
     
     var body: some View {
-        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+        Image(uiImage: (imageLoader.data.isEmpty) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 90, height: 90)
@@ -282,7 +282,7 @@ struct BackgroundImageWidget: View {
     }
     
     var body: some View {
-        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+        Image(uiImage: (imageLoader.data.isEmpty) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
