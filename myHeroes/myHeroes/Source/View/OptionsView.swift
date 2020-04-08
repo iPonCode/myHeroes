@@ -70,7 +70,6 @@ struct OptionsView: View {
                 
             } //form
             .navigationBarTitle(optionsTitle)
-            //.navigationBarTitle(Text(optionsTitle), displayMode: .inline)
                 
             .navigationBarItems(
                 leading: Button(action: { // left button

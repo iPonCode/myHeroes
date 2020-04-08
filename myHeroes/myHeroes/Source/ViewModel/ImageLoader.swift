@@ -12,6 +12,11 @@ class ImageLoader: ObservableObject {
     @Published var data = Data()
     
     init(url: String) {
+        getImage(url)
+    }
+    
+    private func getImage(_ url: String) {
+        
         // TODO: Use AlamofireImage
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { (data, _, _) in
@@ -21,5 +26,6 @@ class ImageLoader: ObservableObject {
             }
         }.resume()
     }
+    
 }
 

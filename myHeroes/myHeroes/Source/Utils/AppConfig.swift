@@ -1,4 +1,4 @@
-//  Constants.swift
+//  AppConfig.swift
 //  myHeroes
 //
 //  Created by Simón Aparicio on 26/03/2020.
@@ -8,13 +8,9 @@
 import Foundation
 import UIKit
 
-// For readability and to have all about configuration located in one place
-
 // MARK: - App Configuration
 
 struct AppConfig {
-
-    // TODO: File names
     
     // Bar buttons
     static let barBack = "rectangle.grid.1x2.fill"
@@ -55,21 +51,3 @@ struct AppConfig {
     private init() {}
     
 }
-
-// MARK: - Api Configuration
-
-struct ApiConfig {
-
-    static let baseUrl = "https://gateway.marvel.com:443/v1/public/characters"
-    static let privateKey = "8074772204a5fa9445ca96c81837f2b6d85b546b"
-    static let publicKey = "1de4fe3d3a6a89ba1e61bb34889865f1"
-    
-    static let charactersWebSearchUrl = "https://www.marvel.com/characters"
-
-    // TODO: Declare headers for webservice here if needed
-
-    private init() {}
-    
-}
-
-

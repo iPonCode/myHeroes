@@ -18,32 +18,7 @@ struct ListView: View {
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
     init() {
-
-        let appearance = UINavigationBarAppearance()
-
-        // fonts for navigationbar titles
-        appearance.largeTitleTextAttributes = [
-            .font: UIFont.AppFont.largeTitle,
-            .foregroundColor: UIColor.barTitles]
-        appearance.titleTextAttributes = [
-            .font: UIFont.AppFont.compactTitle,
-            .foregroundColor: UIColor.barTitles]
-
-        // back button
-        appearance.setBackIndicatorImage(
-            UIImage(systemName: AppConfig.barBack), transitionMaskImage:
-            UIImage(systemName: AppConfig.barBackTrans))
-        appearance.backButtonAppearance.normal.titleTextAttributes = [
-            .font: UIFont.AppFont.barButton,
-            .foregroundColor: UIColor.barButton]
-
-        // transparency
-        appearance.configureWithTransparentBackground()
-
-        // apply appearance
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        ConfigureNavigationBarAppearance()
     }
 
     var body: some View {
@@ -71,42 +46,42 @@ struct ListView: View {
                                 }
                             }
                             .contextMenu {
-                                    Button(action: { // feature
-                                        withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
-                                            self.toggle(charty, type: .featured)
-                                        }
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.featured ? "No destacar" : "Destacar")
-                                            Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
-                                        }
-                                    })
+                                Button(action: { // feature
+                                    withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
+                                        self.toggle(charty, type: .featured)
+                                    }
+                                }, label: {
+                                    HStack{
+                                        Text(charty.featured ? "No destacar" : "Destacar")
+                                        Image(systemName: charty.featured ? AppConfig.menuUnFeat : AppConfig.menuFeat)
+                                    }
+                                })
 
-                                    Button(action: { // watched
-                                        self.toggle(charty, type: .watched)
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.watched ? "Marcar como no visto" : "Visto")
-                                            Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
-                                        }
-                                    })
-                                    Button(action: { // favourite
-                                        self.toggle(charty, type: .favourite)
-                                    }, label: {
-                                        HStack{
-                                            Text(charty.favourite ? "Quitar favorito" : "Favorito")
-                                            Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
-                                        }
-                                    })
+                                Button(action: { // watched
+                                    self.toggle(charty, type: .watched)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.watched ? "Marcar como no visto" : "Visto")
+                                        Image(systemName: charty.watched ? AppConfig.menuUnWatch : AppConfig.menuWatch)
+                                    }
+                                })
+                                Button(action: { // favourite
+                                    self.toggle(charty, type: .favourite)
+                                }, label: {
+                                    HStack{
+                                        Text(charty.favourite ? "Quitar favorito" : "Favorito")
+                                        Image(systemName: charty.favourite ? AppConfig.menuUnFav : AppConfig.menuFav)
+                                    }
+                                })
 
-                                    Button(action: { // remove
-                                        self.removeItem(item: charty)
-                                    }, label: {
-                                        HStack{
-                                            Text("Eliminar")
-                                            Image(systemName: AppConfig.menuRemove)
-                                        }
-                                    })
+                                Button(action: { // remove
+                                    self.removeItem(item: charty)
+                                }, label: {
+                                    HStack{
+                                        Text("Eliminar")
+                                        Image(systemName: AppConfig.menuRemove)
+                                    }
+                                })
                             }
                             // this is the only way (right now) to remove or do not show the
                             // disclouser indicator in the row, first renders the content and
@@ -143,6 +118,35 @@ struct ListView: View {
         .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
     } //body
     
+    private func ConfigureNavigationBarAppearance() {
+        
+        let appearance = UINavigationBarAppearance()
+
+        // fonts for navigationbar titles
+        appearance.largeTitleTextAttributes = [
+            .font: UIFont.AppFont.largeTitle,
+            .foregroundColor: UIColor.barTitles]
+        appearance.titleTextAttributes = [
+            .font: UIFont.AppFont.compactTitle,
+            .foregroundColor: UIColor.barTitles]
+
+        // back button
+        appearance.setBackIndicatorImage(
+            UIImage(systemName: AppConfig.barBack), transitionMaskImage:
+            UIImage(systemName: AppConfig.barBackTrans))
+        appearance.backButtonAppearance.normal.titleTextAttributes = [
+            .font: UIFont.AppFont.barButton,
+            .foregroundColor: UIColor.barButton]
+
+        // transparency
+        appearance.configureWithTransparentBackground()
+
+        // apply appearance
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+
     enum ToggleType {
         case watched
         case favourite
@@ -201,7 +205,7 @@ struct CircleImageWidget: View {
     }
     
     var body: some View {
-        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+        Image(uiImage: (imageLoader.data.isEmpty) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 90, height: 90)
@@ -282,7 +286,7 @@ struct BackgroundImageWidget: View {
     }
     
     var body: some View {
-        Image(uiImage: (imageLoader.data.count == 0) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+        Image(uiImage: (imageLoader.data.isEmpty) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(idealWidth: AppConfig.widthBackgroundImageWidget, maxHeight: AppConfig.maxHeightBackgroundImageWidget)
