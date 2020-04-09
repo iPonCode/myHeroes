@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 final class OptionsFactory: ObservableObject{
-    
-    @Published var defaults: UserDefaults
-    
-    init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
 
+    @Published var defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+
+        self.defaults = defaults
         defaults.register(defaults: [
             "app.view.options.selectedSorting": 0,
             "app.view.options.selectedSortingOption": true,
@@ -24,60 +24,35 @@ final class OptionsFactory: ObservableObject{
             "app.view.options.minComicsAvailable": 0
         ])
     }
-    
-    
+
     var selectedSorting: SortingType{
-        get{
-            SortingType(type: defaults.integer(forKey: "app.view.options.selectedSorting"))
-        }
-        set{
-            defaults.set(newValue.rawValue, forKey: "app.view.options.selectedSorting")
-        }
+        get { SortingType(type: defaults.integer(forKey: "app.view.options.selectedSorting")) }
+        set { defaults.set(newValue.rawValue, forKey: "app.view.options.selectedSorting") }
     }
 
     var selectedSortingOption: SortingOptionType{
-        get{
-            SortingOptionType(option: defaults.integer(forKey: "app.view.options.selectedSortingOption"))
-        }
-        set{
-            defaults.set(newValue.rawValue, forKey: "app.view.options.selectedSortingOption")
-        }
+        get{ SortingOptionType(option: defaults.integer(forKey: "app.view.options.selectedSortingOption")) }
+        set{ defaults.set(newValue.rawValue, forKey: "app.view.options.selectedSortingOption") }
     }
 
     var showWatchedOnly: Bool{
-        get{
-            defaults.bool(forKey: "app.view.options.showWatchedOnly")
-        }
-        set{
-            defaults.set(newValue, forKey: "app.view.options.showWatchedOnly")
-        }
+        get { defaults.bool(forKey: "app.view.options.showWatchedOnly") }
+        set { defaults.set(newValue, forKey: "app.view.options.showWatchedOnly") }
     }
 
     var showFavouriteOnly: Bool{
-        get{
-            defaults.bool(forKey: "app.view.options.showFavouriteOnly")
-        }
-        set{
-            defaults.set(newValue, forKey: "app.view.options.showFavouriteOnly")
-        }
+        get{ defaults.bool(forKey: "app.view.options.showFavouriteOnly") }
+        set{ defaults.set(newValue, forKey: "app.view.options.showFavouriteOnly") }
     }
 
     var showFeaturedOnly: Bool{
-        get{
-            defaults.bool(forKey: "app.view.options.showFeaturedOnly")
-        }
-        set{
-            defaults.set(newValue, forKey: "app.view.options.showFeaturedOnly")
-        }
+        get { defaults.bool(forKey: "app.view.options.showFeaturedOnly") }
+        set { defaults.set(newValue, forKey: "app.view.options.showFeaturedOnly") }
     }
 
     var minComicsAvailable: Int{
-        get{
-            defaults.integer(forKey: "app.view.options.minComicsAvailable")
-        }
-        set{
-            defaults.set(newValue, forKey: "app.view.options.minComicsAvailable")
-        }
+        get { defaults.integer(forKey: "app.view.options.minComicsAvailable") }
+        set { defaults.set(newValue, forKey: "app.view.options.minComicsAvailable") }
     }
-    
+
 }
