@@ -122,18 +122,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		D037D365242AFC590062A012 /* Utils */ = {
+		D037D365242AFC590062A012 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D037D366242AFC760062A012 /* Colors.swift */,
-				D037D368242AFEDC0062A012 /* Fonts.swift */,
-				D081E93B2434BFA2002B6D13 /* Date.swift */,
-				D081E93D2434EEED002B6D13 /* String+md5.swift */,
-				D0133BDB243A4AD200ED8218 /* Transitions.swift */,
-				D037D372242D412C0062A012 /* AppConfig.swift */,
-				D0DA333C243D3EC200945612 /* ApiConfig.swift */,
+				D0E3F51D243FB510002E3FDC /* Extensions */,
+				D0E3F51E243FB523002E3FDC /* Constants */,
 			);
-			path = Utils;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		D0783FC02433ED9D0043B426 /* ViewModel */ = {
@@ -197,7 +192,7 @@
 		D07CC94E242ABD3000EDB5A5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D037D365242AFC590062A012 /* Utils */,
+				D037D365242AFC590062A012 /* Common */,
 				D07CC950242ABD6800EDB5A5 /* View */,
 				D0783FC02433ED9D0043B426 /* ViewModel */,
 				D07CC94F242ABD6300EDB5A5 /* Model */,
@@ -240,6 +235,27 @@
 				D08DDDBD243E517E00806455 /* Info.plist */,
 			);
 			path = myHeroesTests;
+			sourceTree = "<group>";
+		};
+		D0E3F51D243FB510002E3FDC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D037D366242AFC760062A012 /* Colors.swift */,
+				D037D368242AFEDC0062A012 /* Fonts.swift */,
+				D081E93B2434BFA2002B6D13 /* Date.swift */,
+				D081E93D2434EEED002B6D13 /* String+md5.swift */,
+				D0133BDB243A4AD200ED8218 /* Transitions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D0E3F51E243FB523002E3FDC /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				D037D372242D412C0062A012 /* AppConfig.swift */,
+				D0DA333C243D3EC200945612 /* ApiConfig.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
