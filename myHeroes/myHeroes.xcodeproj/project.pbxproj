@@ -35,6 +35,7 @@
 		D0D4E9DF2437844000005E68 /* ItemListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D4E9DE2437844000005E68 /* ItemListType.swift */; };
 		D0DA333D243D3EC200945612 /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA333C243D3EC200945612 /* ApiConfig.swift */; };
 		D0E3F519243FB1AA002E3FDC /* ListCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */; };
+		D0E3F51B243FB423002E3FDC /* DetailCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F51A243FB423002E3FDC /* DetailCellViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		D0D4E9DE2437844000005E68 /* ItemListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListType.swift; sourceTree = "<group>"; };
 		D0DA333C243D3EC200945612 /* ApiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConfig.swift; sourceTree = "<group>"; };
 		D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViews.swift; sourceTree = "<group>"; };
+		D0E3F51A243FB423002E3FDC /* DetailCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCellViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 				D037D370242BAEAD0062A012 /* OptionsView.swift */,
 				D06FFB1C2438D3B400F93511 /* LinkView.swift */,
 				D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */,
+				D0E3F51A243FB423002E3FDC /* DetailCellViews.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				D0133BDC243A4AD200ED8218 /* Transitions.swift in Sources */,
 				D01130DC243AC551007C06F0 /* ErrorResponse.swift in Sources */,
 				D081E9402434EF92002B6D13 /* CharactersDTOs.swift in Sources */,
+				D0E3F51B243FB423002E3FDC /* DetailCellViews.swift in Sources */,
 				D037D377242DB8010062A012 /* OptionsFactory.swift in Sources */,
 				D06FFB1D2438D3B400F93511 /* LinkView.swift in Sources */,
 				D0C1D3732436BA0F008E8CED /* DetailViewModel.swift in Sources */,
