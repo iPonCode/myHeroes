@@ -34,6 +34,7 @@
 		D0C1D3732436BA0F008E8CED /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1D3722436BA0F008E8CED /* DetailViewModel.swift */; };
 		D0D4E9DF2437844000005E68 /* ItemListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D4E9DE2437844000005E68 /* ItemListType.swift */; };
 		D0DA333D243D3EC200945612 /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA333C243D3EC200945612 /* ApiConfig.swift */; };
+		D0E3F519243FB1AA002E3FDC /* ListCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		D0C1D3722436BA0F008E8CED /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D0D4E9DE2437844000005E68 /* ItemListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListType.swift; sourceTree = "<group>"; };
 		D0DA333C243D3EC200945612 /* ApiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConfig.swift; sourceTree = "<group>"; };
+		D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,7 @@
 				D037D36C242B0E1B0062A012 /* DetailView.swift */,
 				D037D370242BAEAD0062A012 /* OptionsView.swift */,
 				D06FFB1C2438D3B400F93511 /* LinkView.swift */,
+				D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				D0C1D3712435FBE9008E8CED /* ImageLoader.swift in Sources */,
 				D07CC93C242ABC6800EDB5A5 /* SceneDelegate.swift in Sources */,
 				D07CC93E242ABC6800EDB5A5 /* ListView.swift in Sources */,
+				D0E3F519243FB1AA002E3FDC /* ListCellViews.swift in Sources */,
 				D037D375242D9AC60062A012 /* SortingType.swift in Sources */,
 				D0133BDC243A4AD200ED8218 /* Transitions.swift in Sources */,
 				D01130DC243AC551007C06F0 /* ErrorResponse.swift in Sources */,
