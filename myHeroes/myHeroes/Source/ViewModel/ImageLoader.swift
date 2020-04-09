@@ -7,11 +7,17 @@
 
 import Foundation
 
+protocol DataManager {
+    func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+}
+
 class ImageLoader: ObservableObject {
 
     @Published var data = Data()
+    private var dataManager: DataManager?
     
-    init(url: String) {
+    init(url: String, dataManager: DataManager? = URLSession.shared) {
+        self.dataManager = dataManager
         getImage(url)
     }
     
@@ -19,7 +25,7 @@ class ImageLoader: ObservableObject {
         
         // TODO: Use AlamofireImage
         guard let url = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
+        dataManager?.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
             DispatchQueue.main.async {
                 self.data = data
@@ -29,3 +35,4 @@ class ImageLoader: ObservableObject {
     
 }
 
+extension URLSession: DataManager { } // for tests
