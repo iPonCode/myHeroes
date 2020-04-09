@@ -8,20 +8,24 @@
 import SwiftUI
 
 struct ComicCellView: View {
-    
+
     var name: String
     var resourceURI: String
 
     var body: some View {
+
         HStack(alignment: .center, spacing: 8) {
+
             Image(systemName: AppConfig.cellLink)
                 .foregroundColor(.secondary)
+
             VStack(alignment: .leading, spacing: 1){
                 Text(name)
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.highlighted)
                     .fontWeight(.bold)
                     .lineLimit(1)
+
                 HStack {
                     VStack {
                         Text(resourceURI)
@@ -35,14 +39,14 @@ struct ComicCellView: View {
                 } //hstack
             } //vstack
         } //hstack
-        
+
     }
 }
 
 struct EmptyComicsItemList: View {
-    
+
     var type: String
-    
+
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             Image(systemName: AppConfig.emptyListIcon)
@@ -57,15 +61,18 @@ struct EmptyComicsItemList: View {
 }
 
 struct HeaderImageWidget: View {
-    
+
     @ObservedObject var imageLoader: ImageLoader
-    
+
     init(url: String) {
         imageLoader = ImageLoader(url: url)
     }
-    
+
     var body: some View {
-        Image(uiImage: (imageLoader.data.isEmpty) ? UIImage(named: "placeholder")! : UIImage(data: imageLoader.data)!)
+
+        Image(uiImage: (imageLoader.data.isEmpty) ?
+                            UIImage(named: "placeholder")! :
+                            UIImage(data: imageLoader.data)!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: AppConfig.screenWidth, height: AppConfig.maxHeightHeaderImageWidget)
