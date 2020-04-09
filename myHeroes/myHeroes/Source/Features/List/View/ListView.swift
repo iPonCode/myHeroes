@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ListView: View {
-    
+
     @State var showOptions: Bool = false
     @EnvironmentObject var options: OptionsFactory
     @ObservedObject var viewModel = ListViewModel()
-    
+
     let listTitle = "Marvel Characters"
-    
+
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
     init() {
@@ -23,10 +23,10 @@ struct ListView: View {
 
     var body: some View {
         NavigationView{
-            
+
             if viewModel.chars.isEmpty { // while list is loading this view will be displayed
                 EmptyCharactersList(error: viewModel.serverError) // if webservice fail, also shows the error
-                
+
             } else { // once have data it has been displayed with its corresponding filters and sorting order applied
                 List{
                     ForEach(viewModel.chars
@@ -47,7 +47,7 @@ struct ListView: View {
                             .contextMenu {
                                 Button(action: { // feature
                                     withAnimation(Animation.easeInOut.speed(AppConfig.animationSpeedFactor)) {
-                                        self.toggle(charty, type: .featured)
+                                        self.viewModel.toggle(charty, type: .featured)
                                     }
                                 }, label: {
                                     HStack{
@@ -57,7 +57,7 @@ struct ListView: View {
                                 })
 
                                 Button(action: { // watched
-                                    self.toggle(charty, type: .watched)
+                                    self.viewModel.toggle(charty, type: .watched)
                                 }, label: {
                                     HStack{
                                         Text(charty.watched ? "Marcar como no visto" : "Visto")
@@ -65,7 +65,7 @@ struct ListView: View {
                                     }
                                 })
                                 Button(action: { // favourite
-                                    self.toggle(charty, type: .favourite)
+                                    self.viewModel.toggle(charty, type: .favourite)
                                 }, label: {
                                     HStack{
                                         Text(charty.favourite ? "Quitar favorito" : "Favorito")
@@ -74,7 +74,7 @@ struct ListView: View {
                                 })
 
                                 Button(action: { // remove
-                                    self.removeItem(item: charty)
+                                    self.viewModel.removeItem(item: charty)
                                 }, label: {
                                     HStack{
                                         Text("Eliminar")
@@ -88,15 +88,15 @@ struct ListView: View {
                             NavigationLink(destination: DetailView(id: charty.id)) {
                                 EmptyView()
                             } //navigation link
-                            
+
                         } //zstack
-                                
+
                     } // need a ForEach instead directly a List to implement onDelete
                     .onDelete(perform: { (indexSet) in
                         // with onDelete, can delete a Set of items
                         self.removeItem(itemsSet: indexSet)
                     })
-                    
+
                 } //list
                 // the navigation modificators goes in the close bracket of the last component inside the NavigationView
                 .navigationBarTitle(Text(listTitle))
@@ -116,9 +116,9 @@ struct ListView: View {
         .onAppear { UITableView.appearance().separatorStyle = .none }
         .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
     } //body
-    
+
     private func ConfigureNavigationBarAppearance() {
-        
+
         let appearance = UINavigationBarAppearance()
 
         // fonts for navigationbar titles
@@ -146,39 +146,15 @@ struct ListView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
-    enum ToggleType {
-        case watched
-        case favourite
-        case featured
-    }
-    
-    func toggle(_ item: CharacterListItemDTO, type: ToggleType) {
-        
-        if let index = self.viewModel.chars.firstIndex(where: { $0.id == item.id }) {
-            switch type {
-                case .watched: viewModel.chars[index].watched.toggle()
-                case .favourite: viewModel.chars[index].favourite.toggle()
-                case .featured: viewModel.chars[index].featured.toggle()
-            }
-        }
-    }
-
-    func removeItem(item: CharacterListItemDTO) { // remove an item
-        
-        self.viewModel.chars.removeAll(where: { charty in
-            charty.id == item.id
-        })
-    }
-
     func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
-        
+
         // When using an index need to filter and sort array previously
         // >> exactly in the same way that are displayed <<
         var itemsWithCurrentFilters = viewModel.chars
             .filter(shouldShowItem)
             .sorted(by: self.options.selectedSorting.sortingPredicate(
                 descOrder: self.options.selectedSortingOption.boolMe()))
-        
+
         itemsWithCurrentFilters.remove(atOffsets: itemsSet)
         viewModel.chars = itemsWithCurrentFilters
     }
@@ -190,7 +166,7 @@ struct ListView: View {
         let checkComicsAvailable = (item.comics.available >= self.options.minComicsAvailable)
         return checkWatched && checkFavourite && checkFeatured && checkComicsAvailable
     }
-   
+
 }
 
 

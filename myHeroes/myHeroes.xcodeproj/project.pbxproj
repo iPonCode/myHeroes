@@ -36,6 +36,7 @@
 		D0DA333D243D3EC200945612 /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA333C243D3EC200945612 /* ApiConfig.swift */; };
 		D0E3F519243FB1AA002E3FDC /* ListCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */; };
 		D0E3F51B243FB423002E3FDC /* DetailCellViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F51A243FB423002E3FDC /* DetailCellViews.swift */; };
+		D0E3F52E243FCC69002E3FDC /* ToggleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3F52D243FCC69002E3FDC /* ToggleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		D0DA333C243D3EC200945612 /* ApiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConfig.swift; sourceTree = "<group>"; };
 		D0E3F518243FB1AA002E3FDC /* ListCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViews.swift; sourceTree = "<group>"; };
 		D0E3F51A243FB423002E3FDC /* DetailCellViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCellViews.swift; sourceTree = "<group>"; };
+		D0E3F52D243FCC69002E3FDC /* ToggleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 			children = (
 				D0E3F52A243FB909002E3FDC /* View */,
 				D0E3F52B243FB90E002E3FDC /* ViewModel */,
+				D0E3F52F243FCC77002E3FDC /* Model */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -342,6 +345,14 @@
 			isa = PBXGroup;
 			children = (
 				D0D4E9DE2437844000005E68 /* ItemListType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D0E3F52F243FCC77002E3FDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D0E3F52D243FCC69002E3FDC /* ToggleType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -514,6 +525,7 @@
 				D037D377242DB8010062A012 /* OptionsFactory.swift in Sources */,
 				D06FFB1D2438D3B400F93511 /* LinkView.swift in Sources */,
 				D0C1D3732436BA0F008E8CED /* DetailViewModel.swift in Sources */,
+				D0E3F52E243FCC69002E3FDC /* ToggleType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
