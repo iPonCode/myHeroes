@@ -26,7 +26,6 @@ struct ListView: View {
             
             if viewModel.chars.isEmpty { // while list is loading this view will be displayed
                 EmptyCharactersList(error: viewModel.serverError) // if webservice fail, also shows the error
-                Spacer()
                 
             } else { // once have data it has been displayed with its corresponding filters and sorting order applied
                 List{
@@ -346,27 +345,39 @@ struct EmptyCharactersList: View {
     var error: ErrorResponse
     
     var body: some View {
-        VStack(alignment: .center, spacing: 4) {
-            Image(systemName: AppConfig.emptyListIcon)
-                .font(.system(size: 36, weight: .semibold))
-                .foregroundColor(.secondary)
-            VStack {
-                Text(String("Loading list…"))
-                    .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.primary)
-                    .fontWeight(.heavy)
-                    .padding(.vertical)
-                Text(String(format:"%@", error.code))
-                    .font(.system(.subheadline, design: .rounded))
+        ZStack {
+            Image("LaunchScreenTrans")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: AppConfig.screenWidth)
+                .edgesIgnoringSafeArea(.all)
+            Rectangle()
+                .foregroundColor(.gray)
+                .opacity(0.90)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack(alignment: .center, spacing: 4) {
+                Image(systemName: AppConfig.emptyListIcon)
+                    .font(.system(size: 36, weight: .semibold))
                     .foregroundColor(.secondary)
-                    .fontWeight(.semibold)
-                Text(String(format:"%@", error.message))
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(.secondary)
-                    .fontWeight(.bold)
+                VStack {
+                    Text(String("Loading list…"))
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(.primary)
+                        .fontWeight(.heavy)
+                        .padding(.vertical)
+                    Text(String(format:"%@", error.code))
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .fontWeight(.semibold)
+                    Text(String(format:"%@", error.message))
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .fontWeight(.bold)
+                }
             }
+            .padding()
         }
-        .padding()
     }
 }
 
