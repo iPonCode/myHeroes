@@ -38,10 +38,12 @@ struct AppConfig {
     static let screenSize: CGRect = UIScreen.main.bounds
     static let screenWidth = screenSize.width
     static let screenHeight = screenSize.height
+    static let halftScreenHeight = screenSize.height / 2
     static let widthBackgroundImageWidget = screenWidth - ((screenWidth * 8) / 100)
     static let maxHeightBackgroundImageWidget = screenHeight - ((screenHeight * 55) / 100)
     static let maxHeightHeaderImageWidget = screenHeight - ((screenHeight * 30) / 100)
-    
+    static let verticalLoadingTextOffset = (halftScreenHeight - ((halftScreenHeight * 20) / 100)) * -1
+
     // Cell Transition and gesture
     static let animationSpeedFactor: Double = 0.85
     static let minLongPressDuration: Double = 0.55
