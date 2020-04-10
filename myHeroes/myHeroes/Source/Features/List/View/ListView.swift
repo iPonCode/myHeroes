@@ -10,14 +10,14 @@ import SwiftUI
 struct ListView: View {
 
     @State var showOptions: Bool = false
-    @EnvironmentObject var options: OptionsFactory
-    @ObservedObject var viewModel = ListViewModel()
+    @ObservedObject var viewModel: ListViewModel
 
     let listTitle = "Marvel Characters"
 
     // For the time being, it is still necessary to configure appearance for Navigation Bar
     // with classical UIKit method using an initializer
-    init() {
+    init(_ viewModel: ListViewModel) {
+        self.viewModel = viewModel
         ConfigureNavigationBarAppearance()
     }
 
@@ -30,9 +30,9 @@ struct ListView: View {
             } else { // once have data it has been displayed with its corresponding filters and sorting order applied
                 List{
                     ForEach(viewModel.chars
-                        .filter(shouldShowItem)
-                        .sorted(by: self.options.selectedSorting.sortingPredicate(
-                            descOrder: self.options.selectedSortingOption.boolMe()))){ charty in
+                        .filter(viewModel.shouldShowItem)
+                        .sorted(by: viewModel.options.selectedSorting.sortingPredicate(
+                            descOrder: viewModel.options.selectedSortingOption.boolMe()))){ charty in
                         // Important to filter and sorteing in the same way
                         // before remove with an index or an indexSet (.onDelete)
 
@@ -94,7 +94,7 @@ struct ListView: View {
                     } // need a ForEach instead directly a List to implement onDelete
                     .onDelete(perform: { (indexSet) in
                         // with onDelete, can delete a Set of items
-                        self.removeItem(itemsSet: indexSet)
+                        self.viewModel.removeItem(itemsSet: indexSet)
                     })
 
                 } //list
@@ -108,7 +108,7 @@ struct ListView: View {
                 })
                 )// this modificator is for present Options in modal view and the binded var is necessary to close it
                 .sheet(isPresented: $showOptions){
-                    OptionsView().environmentObject(self.options) // dependency injection
+                    OptionsView().environmentObject(self.viewModel.options) // dependency injection
                 }
             } //if-else (empty list)
         } //navigation view
@@ -146,27 +146,6 @@ struct ListView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
-    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
-
-        // When using an index need to filter and sort array previously
-        // >> exactly in the same way that are displayed <<
-        var itemsWithCurrentFilters = viewModel.chars
-            .filter(shouldShowItem)
-            .sorted(by: self.options.selectedSorting.sortingPredicate(
-                descOrder: self.options.selectedSortingOption.boolMe()))
-
-        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
-        viewModel.chars = itemsWithCurrentFilters
-    }
-
-    private func shouldShowItem(_ item: CharacterListItemDTO) -> Bool {
-        let checkWatched = (self.options.showWatchedOnly && item.watched) || !self.options.showWatchedOnly
-        let checkFavourite = (self.options.showFavouriteOnly && item.favourite) || !self.options.showFavouriteOnly
-        let checkFeatured = (self.options.showFeaturedOnly && item.featured) || !self.options.showFeaturedOnly
-        let checkComicsAvailable = (item.comics.available >= self.options.minComicsAvailable)
-        return checkWatched && checkFavourite && checkFeatured && checkComicsAvailable
-    }
-
 }
 
 
@@ -174,6 +153,6 @@ struct ListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView().environmentObject(OptionsFactory()) // dependency injection
+        ListView(ListViewModel(OptionsFactory()))
     }
 }

@@ -12,9 +12,11 @@ import Alamofire
 class ListViewModel: ObservableObject {
         
     @Published var chars = [CharacterListItemDTO]()
+    var options: OptionsFactory
     @Published var serverError = ErrorResponse()
 
-    init() {
+    init(_ options: OptionsFactory) {
+        self.options = options
         getCharacterList()
     }
     
@@ -67,5 +69,29 @@ class ListViewModel: ObservableObject {
             charty.id == item.id
         })
     }
+
+    func removeItem(itemsSet: IndexSet) { // remove from .onDelete with and indexSet
+
+        // When using an index need to filter and sort array previously
+        // >> exactly in the same way that are displayed <<
+        var itemsWithCurrentFilters = chars
+            .filter(shouldShowItem)
+            .sorted(by: options.selectedSorting.sortingPredicate(
+                descOrder: options.selectedSortingOption.boolMe()))
+
+        itemsWithCurrentFilters.remove(atOffsets: itemsSet)
+        chars = itemsWithCurrentFilters
+    }
+
+    func shouldShowItem(_ item: CharacterListItemDTO) -> Bool {
+        
+        let checkWatched = (options.showWatchedOnly && item.watched) || !options.showWatchedOnly
+        let checkFavourite = (options.showFavouriteOnly && item.favourite) || !options.showFavouriteOnly
+        let checkFeatured = (options.showFeaturedOnly && item.featured) || !options.showFeaturedOnly
+        let checkComicsAvailable = (item.comics.available >= options.minComicsAvailable)
+        
+        return checkWatched && checkFavourite && checkFeatured && checkComicsAvailable
+    }
+
 
 }
