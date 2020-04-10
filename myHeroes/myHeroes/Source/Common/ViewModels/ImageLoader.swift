@@ -23,7 +23,7 @@ class ImageLoader: ObservableObject {
     
     private func getImage(_ url: String) {
         
-        // TODO: Use AlamofireImage
+        // TODO: Use URLImage (using cache and delay on scroll features)
         guard let url = URL(string: url) else { return }
         dataManager?.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
