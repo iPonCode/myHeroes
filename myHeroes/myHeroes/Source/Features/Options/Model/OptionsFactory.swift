@@ -16,12 +16,12 @@ final class OptionsFactory: ObservableObject{
 
         self.defaults = defaults
         defaults.register(defaults: [
-            "app.view.options.selectedSorting": 0,
-            "app.view.options.selectedSortingOption": true,
-            "app.view.options.showWatchedOnly": false,
-            "app.view.options.showFavouriteOnly": false,
-            "app.view.options.showFeaturedOnly": false,
-            "app.view.options.minComicsAvailable": 0
+            "app.view.options.selectedSorting": AppConfig.selectedSorting,
+            "app.view.options.selectedSortingOption": AppConfig.selectedSortingOption,
+            "app.view.options.showWatchedOnly": AppConfig.showWatchedOnly,
+            "app.view.options.showFavouriteOnly": AppConfig.showFavouriteOnly,
+            "app.view.options.showFeaturedOnly": AppConfig.showFeaturedOnly,
+            "app.view.options.minComicsAvailable": AppConfig.minComicsAvailable
         ])
     }
 
