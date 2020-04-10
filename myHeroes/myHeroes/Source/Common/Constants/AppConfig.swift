@@ -55,7 +55,12 @@ struct AppConfig {
     static let showFavouriteOnly: Bool = false
     static let showFeaturedOnly: Bool = false
     static let minComicsAvailable: Int = 0
-    
+
+    // Stepper
+    static let comicsStepJump: Int = 5
+    static let comicsMinStepperValue: Int = 0
+    static let comicsMaxStepperValue: Int = 75
+
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here
     private init() {}

@@ -34,11 +34,11 @@ struct OptionsView: View {
                     Toggle(isOn: $showFeaturedOnly){ Text("Show only checked as Featured") }
 
                     Stepper(onIncrement: {
-                        self.minComicsAvailable += 5
-                        if self.minComicsAvailable > 15 { self.minComicsAvailable = 15 }
+                        self.minComicsAvailable += AppConfig.comicsStepJump
+                        if self.minComicsAvailable > AppConfig.comicsMaxStepperValue { self.minComicsAvailable = AppConfig.comicsMaxStepperValue }
                     }, onDecrement: {
-                        self.minComicsAvailable -= 5
-                        if self.minComicsAvailable < 0 { self.minComicsAvailable = 0 }
+                        self.minComicsAvailable -= AppConfig.comicsStepJump
+                        if self.minComicsAvailable < AppConfig.comicsMinStepperValue { self.minComicsAvailable = AppConfig.comicsMinStepperValue }
                     }) { Text(String(format: "Show only with at least %d comics available", minComicsAvailable)) }
                 }
 
