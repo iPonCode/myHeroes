@@ -149,6 +149,7 @@ struct EmptyCharactersList: View {
                         .fontWeight(.bold)
                 }
             }
+            .offset(y: AppConfig.verticalLoadingTextOffset)
             .padding()
         }
     }
