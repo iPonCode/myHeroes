@@ -18,12 +18,7 @@ struct OptionsView: View {
     @State private var showWatchedOnly = false
     @State private var showFavouriteOnly = false
     @State private var showFeaturedOnly = false
-    @State private var minComicsAvailable = 0 {
-        didSet { // limit the max and min value that the user can selected
-            if minComicsAvailable > 50 { minComicsAvailable = 50 }
-            if minComicsAvailable < 0 { minComicsAvailable = 0 }
-        }
-    }
+    @State private var minComicsAvailable = 25
 
     let optionsTitle = "Sorting and filters"
 
@@ -40,8 +35,10 @@ struct OptionsView: View {
 
                     Stepper(onIncrement: {
                         self.minComicsAvailable += 5
+                        if self.minComicsAvailable > 15 { self.minComicsAvailable = 15 }
                     }, onDecrement: {
                         self.minComicsAvailable -= 5
+                        if self.minComicsAvailable < 0 { self.minComicsAvailable = 0 }
                     }) { Text(String(format: "Show only with at least %d comics available", minComicsAvailable)) }
                 }
 
