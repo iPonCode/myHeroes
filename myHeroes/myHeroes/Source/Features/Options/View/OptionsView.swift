@@ -12,13 +12,13 @@ struct OptionsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var options: OptionsFactory
 
-    // set default values
-    @State private var selectedSorting = SortingType.byName
-    @State private var selectedSortingOption = SortingOptionType.descending
-    @State private var showWatchedOnly = false
-    @State private var showFavouriteOnly = false
-    @State private var showFeaturedOnly = false
-    @State private var minComicsAvailable = 25
+    // Defauls Options values will be set by UserDefaults, not here
+    @State private var selectedSorting = SortingType(type: AppConfig.selectedSorting)
+    @State private var selectedSortingOption = SortingOptionType(option: AppConfig.selectedSortingOption)
+    @State private var showWatchedOnly = AppConfig.showWatchedOnly
+    @State private var showFavouriteOnly = AppConfig.showFavouriteOnly
+    @State private var showFeaturedOnly = AppConfig.showFeaturedOnly
+    @State private var minComicsAvailable = AppConfig.minComicsAvailable
 
     let optionsTitle = "Sorting and filters"
 

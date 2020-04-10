@@ -49,7 +49,7 @@ struct AppConfig {
     static let minLongPressDuration: Double = 0.55
     
     // Default values for options
-    static let selectedSorting: Int = 0
+    static let selectedSorting: Int = 0 // byName is 0
     static let selectedSortingOption: Bool = false // descending is true
     static let showWatchedOnly: Bool = false
     static let showFavouriteOnly: Bool = false
