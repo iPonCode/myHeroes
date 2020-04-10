@@ -101,6 +101,14 @@ enum SortingOptionType: Int, CaseIterable {
         }
     }
 
+    init(option: Bool){
+
+        switch option {
+            case false: self = .ascending
+            case true: self = .descending
+        }
+    }
+
     var description: String {
 
         switch self {

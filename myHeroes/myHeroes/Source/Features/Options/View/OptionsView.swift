@@ -12,18 +12,13 @@ struct OptionsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var options: OptionsFactory
 
-    // set default values
-    @State private var selectedSorting = SortingType.byName
-    @State private var selectedSortingOption = SortingOptionType.descending
-    @State private var showWatchedOnly = false
-    @State private var showFavouriteOnly = false
-    @State private var showFeaturedOnly = false
-    @State private var minComicsAvailable = 0 {
-        didSet { // limit the max and min value that the user can selected
-            if minComicsAvailable > 50 { minComicsAvailable = 50 }
-            if minComicsAvailable < 0 { minComicsAvailable = 0 }
-        }
-    }
+    // Defauls Options values will be set by UserDefaults, not here
+    @State private var selectedSorting = SortingType(type: AppConfig.selectedSorting)
+    @State private var selectedSortingOption = SortingOptionType(option: AppConfig.selectedSortingOption)
+    @State private var showWatchedOnly = AppConfig.showWatchedOnly
+    @State private var showFavouriteOnly = AppConfig.showFavouriteOnly
+    @State private var showFeaturedOnly = AppConfig.showFeaturedOnly
+    @State private var minComicsAvailable = AppConfig.minComicsAvailable
 
     let optionsTitle = "Sorting and filters"
 
@@ -39,9 +34,11 @@ struct OptionsView: View {
                     Toggle(isOn: $showFeaturedOnly){ Text("Show only checked as Featured") }
 
                     Stepper(onIncrement: {
-                        self.minComicsAvailable += 5
+                        self.minComicsAvailable += AppConfig.comicsStepJump
+                        if self.minComicsAvailable > AppConfig.comicsMaxStepperValue { self.minComicsAvailable = AppConfig.comicsMaxStepperValue }
                     }, onDecrement: {
-                        self.minComicsAvailable -= 5
+                        self.minComicsAvailable -= AppConfig.comicsStepJump
+                        if self.minComicsAvailable < AppConfig.comicsMinStepperValue { self.minComicsAvailable = AppConfig.comicsMinStepperValue }
                     }) { Text(String(format: "Show only with at least %d comics available", minComicsAvailable)) }
                 }
 

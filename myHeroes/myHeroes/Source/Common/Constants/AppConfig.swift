@@ -47,6 +47,19 @@ struct AppConfig {
     // Cell Transition and gesture
     static let animationSpeedFactor: Double = 0.85
     static let minLongPressDuration: Double = 0.55
+    
+    // Default values for options
+    static let selectedSorting: Int = 0 // byName is 0
+    static let selectedSortingOption: Bool = false // descending is true
+    static let showWatchedOnly: Bool = false
+    static let showFavouriteOnly: Bool = false
+    static let showFeaturedOnly: Bool = false
+    static let minComicsAvailable: Int = 0
+
+    // Stepper
+    static let comicsStepJump: Int = 5
+    static let comicsMinStepperValue: Int = 0
+    static let comicsMaxStepperValue: Int = 75
 
     // This private constructor is so that the structure cannot be instantiated,
     // since it will only have static constants and are defined here
