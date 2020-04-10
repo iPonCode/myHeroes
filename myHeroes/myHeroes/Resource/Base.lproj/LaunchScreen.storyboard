@@ -23,7 +23,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="M1B-vg-heo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2E7-uL-sPe"/>
                             <constraint firstItem="M1B-vg-heo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="52" id="8tm-RN-hFA"/>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenTrans" width="600" height="600"/>
+        <image name="LaunchScreenTrans" width="300" height="300"/>
     </resources>
 </document>
