@@ -34,37 +34,33 @@ struct OptionsView: View {
                 Section(header: Text("Select filters criteria")
                                     .font(.system(.body, design: .rounded))
                                     .fontWeight(.semibold)) {
-                    Toggle(isOn: $showWatchedOnly){
-                        Text("Show only checked as Wached")
-                    }
-                    Toggle(isOn: $showFavouriteOnly){
-                        Text("Show only checked as Favourite")
-                    }
-                    Toggle(isOn: $showFeaturedOnly){
-                        Text("Show only checked as Featured")
-                    }
+                    Toggle(isOn: $showWatchedOnly){ Text("Show only checked as Wached") }
+                    Toggle(isOn: $showFavouriteOnly){ Text("Show only checked as Favourite") }
+                    Toggle(isOn: $showFeaturedOnly){ Text("Show only checked as Featured") }
 
                     Stepper(onIncrement: {
                         self.minComicsAvailable += 5
                     }, onDecrement: {
                         self.minComicsAvailable -= 5
-                    }){
-                        Text(String(format: "Show only with at least %d comics available", minComicsAvailable))
-                    }
+                    }) { Text(String(format: "Show only with at least %d comics available", minComicsAvailable)) }
                 }
 
                 Section(header: Text("Select sorting criteria")
                                     .font(.system(.body, design: .rounded))
                                     .fontWeight(.semibold)) {
-                    Picker(selection: $selectedSorting, label: Text("Sorting by")){
-                        ForEach(SortingType.allCases, id: \.self){ sortingType in
-                            Text(sortingType.description)
-                        }
+
+                    Picker(selection: $selectedSorting,
+                           label: Text("Sorting by")) {
+                            ForEach(SortingType.allCases, id: \.self){ sortingType in
+                                Text(sortingType.description)
+                            }
                     }
-                    Picker(selection: $selectedSortingOption, label: Text("Sorting by")){
-                        ForEach(SortingOptionType.allCases, id: \.self){ sortingOptionType in
-                            Text(sortingOptionType.description)
-                        }
+
+                    Picker(selection: $selectedSortingOption,
+                           label: Text("Sorting by")) {
+                            ForEach(SortingOptionType.allCases, id: \.self){ sortingOptionType in
+                                Text(sortingOptionType.description)
+                            }
                     }.pickerStyle(SegmentedPickerStyle())
                 }
                 
@@ -80,21 +76,21 @@ struct OptionsView: View {
                 }),
                 trailing: Button(action: { // right button
                 
-                // Save Options
-                self.options.selectedSorting = self.selectedSorting
-                self.options.selectedSortingOption = self.selectedSortingOption
-                self.options.showWatchedOnly = self.showWatchedOnly
-                self.options.showFavouriteOnly = self.showFavouriteOnly
-                self.options.showFeaturedOnly = self.showFeaturedOnly
-                self.options.minComicsAvailable = self.minComicsAvailable
+                    // Save Options
+                    self.options.selectedSorting = self.selectedSorting
+                    self.options.selectedSortingOption = self.selectedSortingOption
+                    self.options.showWatchedOnly = self.showWatchedOnly
+                    self.options.showFavouriteOnly = self.showFavouriteOnly
+                    self.options.showFeaturedOnly = self.showFeaturedOnly
+                    self.options.minComicsAvailable = self.minComicsAvailable
 
-                self.presentationMode.wrappedValue.dismiss() // close view
-                }, label: {
-                    Image(systemName: AppConfig.barSaveOptions)
-                        .font(Font(UIFont.AppFont.compactTitle))
-                })
-            )
-        
+                    self.presentationMode.wrappedValue.dismiss() // close view
+                    }, label: {
+                        Image(systemName: AppConfig.barSaveOptions)
+                            .font(Font(UIFont.AppFont.compactTitle))
+                    })
+                )
+
         } //navigation view
         .onAppear { // Load saved options
             self.selectedSorting = self.options.selectedSorting
@@ -107,6 +103,7 @@ struct OptionsView: View {
 
     }
 }
+
 
 struct OptionsView_Previews: PreviewProvider {
     static var previews: some View {

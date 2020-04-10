@@ -50,4 +50,22 @@ class ListViewModel: ObservableObject {
         
     }
     
+    func toggle(_ item: CharacterListItemDTO, type: ToggleType) {
+        
+        if let index = chars.firstIndex(where: { $0.id == item.id }) {
+            switch type {
+                case .watched: chars[index].watched.toggle()
+                case .favourite: chars[index].favourite.toggle()
+                case .featured: chars[index].featured.toggle()
+            }
+        }
+    }
+
+    func removeItem(item: CharacterListItemDTO) { // remove an item
+        
+        chars.removeAll(where: { charty in
+            charty.id == item.id
+        })
+    }
+
 }

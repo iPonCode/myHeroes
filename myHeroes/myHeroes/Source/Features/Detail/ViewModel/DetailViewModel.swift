@@ -9,21 +9,21 @@ import Foundation
 import Combine
 
 class DetailViewModel: ObservableObject {
-        
+
     @Published var charty = CharacterDTO()
 
     init(_ id: Int) {
         getDetails(id)
     }
-    
+
     private func getDetails(_ id: Int) {
-        
+
         guard let url = URL(string: ApiConfig.getDetailsUrl(id)) else { return }
-        
+
         URLSession.shared.dataTask(with: url) { (data, _, _) in
-            
+
             guard let data = data else { return }
-            
+
             let networkResponse = try! JSONDecoder().decode(NetworkDetailResponseDTO.self, from: data)
             DispatchQueue.main.async {
                 if let character = networkResponse.data?.results.first{
@@ -31,7 +31,7 @@ class DetailViewModel: ObservableObject {
                 }
             }
         }.resume()
-        
+
     }
 
 }
