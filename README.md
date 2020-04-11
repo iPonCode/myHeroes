@@ -1,7 +1,7 @@
 # myHeroes
 |||
-|-|-|
-|![myHeroesLogo](readme-img/myHeroes-repository-readme-trans-logo-small.png "myHeroes")|This is a **SwiftUI** List App implemented with a **MVVM architecture** -  using the *[Marvel Characters API][apiMarvel]* - Please, feel free to comment, feedback are welcome. *(note for Marvel comics fans: Sorry for the Batman shape in this project, this was not done on purpose)* - *"Data provided by Marvel. © 2014 Marvel"*|
+|-|:-:|
+|![myHeroesLogo](readme-img/myHeroes-repository-readme-trans-logo-small.png "myHeroes")|This is a **SwiftUI** List App implemented with a **MVVM architecture** -  using the *[Marvel Characters API][apiMarvel]* - Please, feel free to comment, feedback are welcome - **Scroll down for changelog** - *(note for Marvel comics fans: Sorry for the Batman shape in this project, this was not done on purpose)* - *"Data provided by Marvel. © 2014 Marvel"*|
 
 ### Screenshots
 |LaunchScreen|First App Screen|Empty List - While Loading|
@@ -18,7 +18,7 @@
 |:-:|:-:|:-:|
 |![myHeroesScreenshootDarkMode07](readme-img/myHeroes-screenshoot-dark-07.jpg "Dark - Options Filter And Sorting View")|![myHeroesScreenshootDarkMode08](readme-img/myHeroes-screenshoot-dark-08.jpg "Dark - Detail View With Empty Segmented Control List")|![myHeroesScreenshootDarkMode09](readme-img/myHeroes-screenshoot-dark-09.jpg "Dark - Detail View With Segmented Control List")|
 |![myHeroesScreenshootLightMode07](readme-img/myHeroes-screenshoot-light-07.jpg "Light - Options Filter And Sorting View")|![myHeroesScreenshootLightMode08](readme-img/myHeroes-screenshoot-light-08.jpg "Light - Detail View With Empty Segmented Control List")|![myHeroesScreenshootLightMode09](readme-img/myHeroes-screenshoot-light-09.jpg "Light - Detail View With Segmented Control List")|
-> *"Data provided by Marvel. © 2014 Marvel"*|
+> *"Data provided by Marvel. © 2014 Marvel"*
 
 ## Changelog
 ### 1.0.1
