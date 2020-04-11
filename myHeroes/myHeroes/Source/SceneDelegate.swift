@@ -21,8 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         
         // Dependency injection needed for OptionsFactory with default app options
-        let contentView = ListView().environmentObject(OptionsFactory())
-
+        // let contentView = ListView().environmentObject(OptionsFactory())
+        
+        // If don't need access options in viewModel do it just like line avobe.
+        // With SwiftUI, this is necesary to use options (environmentObject) in viewModel
+        let envObj = OptionsFactory()                                   // create environment object
+        let viewModel = ListViewModel(envObj)                           // create view model
+        let contentView = ListView(viewModel).environmentObject(envObj) // create the view
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

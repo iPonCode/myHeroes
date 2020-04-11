@@ -15,19 +15,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenTrans" translatesAutoresizingMaskIntoConstraints="NO" id="M1B-vg-heo">
-                                <rect key="frame" x="4" y="245" width="406" height="406"/>
+                            <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="LaunchScreenTrans" translatesAutoresizingMaskIntoConstraints="NO" id="M1B-vg-heo">
+                                <rect key="frame" x="0.0" y="293" width="414" height="414"/>
                                 <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="M1B-vg-heo" secondAttribute="height" multiplier="1:1" id="6TC-2o-Sad"/>
+                                    <constraint firstAttribute="width" secondItem="M1B-vg-heo" secondAttribute="height" multiplier="1:1" id="1Fl-IB-kHo"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="M1B-vg-heo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="4PT-Mg-iOf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="M1B-vg-heo" secondAttribute="trailing" constant="4" id="VV2-t5-QDh"/>
-                            <constraint firstItem="M1B-vg-heo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="tg7-s9-rCb"/>
+                            <constraint firstItem="M1B-vg-heo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2E7-uL-sPe"/>
+                            <constraint firstItem="M1B-vg-heo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="52" id="8tm-RN-hFA"/>
+                            <constraint firstItem="M1B-vg-heo" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="ffG-Ia-pKL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenTrans" width="600" height="600"/>
+        <image name="LaunchScreenTrans" width="300" height="300"/>
     </resources>
 </document>
